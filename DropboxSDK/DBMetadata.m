@@ -66,7 +66,7 @@
 -(void)dumpToDictionary:(NSMutableDictionary *)dictionary {
   [dictionary setObject:NUMBOOL(self.thumbnailExists) forKey:@"thumbnailExists"];
   [dictionary setObject:NUMLONGLONG(self.totalBytes) forKey:@"totalBytes"];
-  [dictionary setObject:self.lastModifiedDate forKey:@"lastModifiedDate"];
+  [dictionary setObject:NULL_IF_NIL(self.lastModifiedDate) forKey:@"lastModifiedDate"];
   [dictionary setObject:self.path forKey:@"path"];
   [dictionary setObject:NUMBOOL(self.isDirectory) forKey:@"isDirectory"];
   [dictionary setObject:NULL_IF_NIL(self.hash) forKey:@"hash"];
