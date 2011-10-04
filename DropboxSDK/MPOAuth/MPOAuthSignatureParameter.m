@@ -8,7 +8,7 @@
 
 #import "MPOAuthSignatureParameter.h"
 #import "MPOAuthURLRequest.h"
-#import "NSString+URLEscapingAdditions.h"
+#import "NSString+Dropbox.h"
 #import "NSURL+MPURLParameterAdditions.h"
 #import <CommonCrypto/CommonHMAC.h>
 #include "Base64Transcoder.h"
@@ -39,7 +39,7 @@
 	//Base64 Encoding
 	char base64Result[32];
 	size_t theResultLength = 32;
-	Base64EncodeData(result, 20, base64Result, &theResultLength);
+	DropboxBase64EncodeData(result, 20, base64Result, &theResultLength);
 	NSData *theData = [NSData dataWithBytes:base64Result length:theResultLength];
 	NSString *base64EncodedResult = [[[NSString alloc] initWithData:theData encoding:NSUTF8StringEncoding] autorelease];
 	

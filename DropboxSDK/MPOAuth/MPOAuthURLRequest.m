@@ -12,7 +12,6 @@
 #import "MPDebug.h"
 
 #import "NSURL+MPURLParameterAdditions.h"
-#import "NSString+URLEscapingAdditions.h"
 
 @interface MPOAuthURLRequest ()
 @property (nonatomic, readwrite, retain) NSURLRequest *urlRequest;

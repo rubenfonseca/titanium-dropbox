@@ -9,7 +9,7 @@
 #import "MPOAuthCredentialConcreteStore.h"
 #import "MPURLRequestParameter.h"
 
-#import "NSString+URLEscapingAdditions.h"
+#import "NSString+Dropbox.h"
 
 extern NSString * const MPOAuthCredentialRequestTokenKey;
 extern NSString * const MPOAuthCredentialRequestTokenSecretKey;

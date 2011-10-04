@@ -7,7 +7,7 @@
 //
 
 #import "MPURLRequestParameter.h"
-#import "NSString+URLEscapingAdditions.h"
+#import "NSString+Dropbox.h"
 
 @implementation MPURLRequestParameter
 

@@ -66,3 +66,7 @@
 
 @end
 
+@interface NSObjectSBJSon : NSObject {
+}
+@end
+

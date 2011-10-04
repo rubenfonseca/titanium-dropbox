@@ -51,3 +51,6 @@
 }
 
 @end
+
+@implementation NSObjectSBJSon
+@end

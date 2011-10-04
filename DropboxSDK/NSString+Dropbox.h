@@ -15,4 +15,7 @@
 // Normalizes both paths and compares them
 + (BOOL)string:(NSString *)string isEqualToDropboxPath:(NSString*)otherPath;
 
++ (BOOL)isIPAddress:(NSString *)string;
++ (NSString *)string:(NSString *)string byAddingURIPercentEscapesUsingEncoding:(NSStringEncoding)inEncoding;
+
 @end

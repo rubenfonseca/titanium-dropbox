@@ -14,7 +14,6 @@
 #import "MPOAuthURLRequest.h"
 #import "MPURLRequestParameter.h"
 #import "MPOAuthSignatureParameter.h"
-#import "NSString+URLEscapingAdditions.h"
 
 
 NSString* kDBProtocolHTTP = @"http";

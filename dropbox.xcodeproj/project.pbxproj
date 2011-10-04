@@ -86,8 +86,6 @@
 		3E041692135095A900C66455 /* MPOAuthURLResponse.m in Sources */ = {isa = PBXBuildFile; fileRef = 3E04164B135095A900C66455 /* MPOAuthURLResponse.m */; };
 		3E041693135095A900C66455 /* MPURLRequestParameter.h in Headers */ = {isa = PBXBuildFile; fileRef = 3E04164C135095A900C66455 /* MPURLRequestParameter.h */; };
 		3E041694135095A900C66455 /* MPURLRequestParameter.m in Sources */ = {isa = PBXBuildFile; fileRef = 3E04164D135095A900C66455 /* MPURLRequestParameter.m */; };
-		3E041695135095A900C66455 /* NSString+URLEscapingAdditions.h in Headers */ = {isa = PBXBuildFile; fileRef = 3E04164E135095A900C66455 /* NSString+URLEscapingAdditions.h */; };
-		3E041696135095A900C66455 /* NSString+URLEscapingAdditions.m in Sources */ = {isa = PBXBuildFile; fileRef = 3E04164F135095A900C66455 /* NSString+URLEscapingAdditions.m */; };
 		3E041697135095A900C66455 /* NSURL+MPURLParameterAdditions.h in Headers */ = {isa = PBXBuildFile; fileRef = 3E041650135095A900C66455 /* NSURL+MPURLParameterAdditions.h */; };
 		3E041698135095A900C66455 /* NSURL+MPURLParameterAdditions.m in Sources */ = {isa = PBXBuildFile; fileRef = 3E041651135095A900C66455 /* NSURL+MPURLParameterAdditions.m */; };
 		3E041699135095A900C66455 /* NSURLResponse+Encoding.h in Headers */ = {isa = PBXBuildFile; fileRef = 3E041652135095A900C66455 /* NSURLResponse+Encoding.h */; };
@@ -181,8 +179,6 @@
 		3E04164B135095A900C66455 /* MPOAuthURLResponse.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MPOAuthURLResponse.m; sourceTree = "<group>"; };
 		3E04164C135095A900C66455 /* MPURLRequestParameter.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MPURLRequestParameter.h; sourceTree = "<group>"; };
 		3E04164D135095A900C66455 /* MPURLRequestParameter.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MPURLRequestParameter.m; sourceTree = "<group>"; };
-		3E04164E135095A900C66455 /* NSString+URLEscapingAdditions.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "NSString+URLEscapingAdditions.h"; sourceTree = "<group>"; };
-		3E04164F135095A900C66455 /* NSString+URLEscapingAdditions.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "NSString+URLEscapingAdditions.m"; sourceTree = "<group>"; };
 		3E041650135095A900C66455 /* NSURL+MPURLParameterAdditions.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "NSURL+MPURLParameterAdditions.h"; sourceTree = "<group>"; };
 		3E041651135095A900C66455 /* NSURL+MPURLParameterAdditions.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "NSURL+MPURLParameterAdditions.m"; sourceTree = "<group>"; };
 		3E041652135095A900C66455 /* NSURLResponse+Encoding.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "NSURLResponse+Encoding.h"; sourceTree = "<group>"; };
@@ -351,8 +347,6 @@
 				3E04164B135095A900C66455 /* MPOAuthURLResponse.m */,
 				3E04164C135095A900C66455 /* MPURLRequestParameter.h */,
 				3E04164D135095A900C66455 /* MPURLRequestParameter.m */,
-				3E04164E135095A900C66455 /* NSString+URLEscapingAdditions.h */,
-				3E04164F135095A900C66455 /* NSString+URLEscapingAdditions.m */,
 				3E041650135095A900C66455 /* NSURL+MPURLParameterAdditions.h */,
 				3E041651135095A900C66455 /* NSURL+MPURLParameterAdditions.m */,
 				3E041652135095A900C66455 /* NSURLResponse+Encoding.h */,
@@ -413,7 +407,6 @@
 				3E04168F135095A900C66455 /* MPOAuthURLRequest.h in Headers */,
 				3E041691135095A900C66455 /* MPOAuthURLResponse.h in Headers */,
 				3E041693135095A900C66455 /* MPURLRequestParameter.h in Headers */,
-				3E041695135095A900C66455 /* NSString+URLEscapingAdditions.h in Headers */,
 				3E041697135095A900C66455 /* NSURL+MPURLParameterAdditions.h in Headers */,
 				3E041699135095A900C66455 /* NSURLResponse+Encoding.h in Headers */,
 				3E04169B135095A900C66455 /* NSString+Dropbox.h in Headers */,
@@ -448,7 +441,7 @@
 		0867D690FE84028FC02AAC07 /* Project object */ = {
 			isa = PBXProject;
 			attributes = {
-				LastUpgradeCheck = 0410;
+				LastUpgradeCheck = 0420;
 			};
 			buildConfigurationList = 1DEB922208733DC00010E9CD /* Build configuration list for PBXProject "dropbox" */;
 			compatibilityVersion = "Xcode 3.2";
@@ -521,7 +514,6 @@
 				3E041690135095A900C66455 /* MPOAuthURLRequest.m in Sources */,
 				3E041692135095A900C66455 /* MPOAuthURLResponse.m in Sources */,
 				3E041694135095A900C66455 /* MPURLRequestParameter.m in Sources */,
-				3E041696135095A900C66455 /* NSString+URLEscapingAdditions.m in Sources */,
 				3E041698135095A900C66455 /* NSURL+MPURLParameterAdditions.m in Sources */,
 				3E04169A135095A900C66455 /* NSURLResponse+Encoding.m in Sources */,
 				3E04169C135095A900C66455 /* NSString+Dropbox.m in Sources */,
