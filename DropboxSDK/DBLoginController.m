@@ -213,7 +213,13 @@ UITableViewDataSource, UITableViewDelegate>
 
 - (void)didPressCancel {
     [self setWorking:NO];
+  
+  if([self.navigationController respondsToSelector:@selector(presentingViewController)]) {
+    [self.navigationController.presentingViewController dismissModalViewControllerAnimated:YES]; 
+  } else {
     [self.navigationController.parentViewController dismissModalViewControllerAnimated:YES];
+  }
+    
     [delegate loginControllerDidCancel:self];
 }
 
@@ -365,7 +371,13 @@ replacementString:(NSString *)string {
 
 - (void)restClientDidLogin:(DBRestClient*)client {
     [self setWorking:NO];
-    [self.parentViewController dismissModalViewControllerAnimated:YES];
+  
+  if([self.navigationController respondsToSelector:@selector(presentingViewController)]) {
+    [self.navigationController.presentingViewController dismissModalViewControllerAnimated:YES]; 
+  } else {
+    [self.navigationController.parentViewController dismissModalViewControllerAnimated:YES];
+  }
+  
     [delegate loginControllerDidLogin:self];
 }
 

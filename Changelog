@@ -1,0 +1,7 @@
+2011-10-24 Rúben Fonseca <fonseka@gmail.com>
+
+	* version 0.7 released
+
+	* fixes a bug where it's not possible to dismiss the Login window
+		on the new iOS 5 devices. Aparently, iOS 5 the API of accessing
+		the parent window.

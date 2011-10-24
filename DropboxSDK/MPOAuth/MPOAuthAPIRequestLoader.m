@@ -13,7 +13,7 @@
 #import "MPOAuthCredentialStore.h"
 #import "MPOAuthCredentialConcreteStore.h"
 #import "MPURLRequestParameter.h"
-#import "NSURLResponse+Encoding.h"
+#import "DBNSURLResponse.h"
 #import "MPDebug.h"
 
 NSString * const MPOAuthNotificationRequestTokenReceived	= @"MPOAuthNotificationRequestTokenReceived";

@@ -88,8 +88,6 @@
 		3E041694135095A900C66455 /* MPURLRequestParameter.m in Sources */ = {isa = PBXBuildFile; fileRef = 3E04164D135095A900C66455 /* MPURLRequestParameter.m */; };
 		3E041697135095A900C66455 /* NSURL+MPURLParameterAdditions.h in Headers */ = {isa = PBXBuildFile; fileRef = 3E041650135095A900C66455 /* NSURL+MPURLParameterAdditions.h */; };
 		3E041698135095A900C66455 /* NSURL+MPURLParameterAdditions.m in Sources */ = {isa = PBXBuildFile; fileRef = 3E041651135095A900C66455 /* NSURL+MPURLParameterAdditions.m */; };
-		3E041699135095A900C66455 /* NSURLResponse+Encoding.h in Headers */ = {isa = PBXBuildFile; fileRef = 3E041652135095A900C66455 /* NSURLResponse+Encoding.h */; };
-		3E04169A135095A900C66455 /* NSURLResponse+Encoding.m in Sources */ = {isa = PBXBuildFile; fileRef = 3E041653135095A900C66455 /* NSURLResponse+Encoding.m */; };
 		3E04169B135095A900C66455 /* NSString+Dropbox.h in Headers */ = {isa = PBXBuildFile; fileRef = 3E041654135095A900C66455 /* NSString+Dropbox.h */; };
 		3E04169C135095A900C66455 /* NSString+Dropbox.m in Sources */ = {isa = PBXBuildFile; fileRef = 3E041655135095A900C66455 /* NSString+Dropbox.m */; };
 		3E04169E1350960200C66455 /* UIKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 3E04169D1350960200C66455 /* UIKit.framework */; };
@@ -99,6 +97,8 @@
 		3EE509E213534075001C442C /* Com0x82DropboxSessionProxy.m in Sources */ = {isa = PBXBuildFile; fileRef = 3EE509E013534075001C442C /* Com0x82DropboxSessionProxy.m */; };
 		3EE509E51353407A001C442C /* Com0x82DropboxClientProxy.h in Headers */ = {isa = PBXBuildFile; fileRef = 3EE509E31353407A001C442C /* Com0x82DropboxClientProxy.h */; };
 		3EE509E61353407A001C442C /* Com0x82DropboxClientProxy.m in Sources */ = {isa = PBXBuildFile; fileRef = 3EE509E41353407A001C442C /* Com0x82DropboxClientProxy.m */; };
+		3EFBC6B214559DA6008272C0 /* DBNSURLResponse.h in Headers */ = {isa = PBXBuildFile; fileRef = 3EFBC6B014559DA6008272C0 /* DBNSURLResponse.h */; };
+		3EFBC6B314559DA6008272C0 /* DBNSURLResponse.m in Sources */ = {isa = PBXBuildFile; fileRef = 3EFBC6B114559DA6008272C0 /* DBNSURLResponse.m */; };
 		AA747D9F0F9514B9006C5449 /* Com0x82Dropbox_Prefix.pch in Headers */ = {isa = PBXBuildFile; fileRef = AA747D9E0F9514B9006C5449 /* Com0x82Dropbox_Prefix.pch */; };
 		AACBBE4A0F95108600F1A2B1 /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = AACBBE490F95108600F1A2B1 /* Foundation.framework */; };
 /* End PBXBuildFile section */
@@ -181,8 +181,6 @@
 		3E04164D135095A900C66455 /* MPURLRequestParameter.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MPURLRequestParameter.m; sourceTree = "<group>"; };
 		3E041650135095A900C66455 /* NSURL+MPURLParameterAdditions.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "NSURL+MPURLParameterAdditions.h"; sourceTree = "<group>"; };
 		3E041651135095A900C66455 /* NSURL+MPURLParameterAdditions.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "NSURL+MPURLParameterAdditions.m"; sourceTree = "<group>"; };
-		3E041652135095A900C66455 /* NSURLResponse+Encoding.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "NSURLResponse+Encoding.h"; sourceTree = "<group>"; };
-		3E041653135095A900C66455 /* NSURLResponse+Encoding.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "NSURLResponse+Encoding.m"; sourceTree = "<group>"; };
 		3E041654135095A900C66455 /* NSString+Dropbox.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "NSString+Dropbox.h"; sourceTree = "<group>"; };
 		3E041655135095A900C66455 /* NSString+Dropbox.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "NSString+Dropbox.m"; sourceTree = "<group>"; };
 		3E04169D1350960200C66455 /* UIKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = UIKit.framework; path = System/Library/Frameworks/UIKit.framework; sourceTree = SDKROOT; };
@@ -192,6 +190,8 @@
 		3EE509E013534075001C442C /* Com0x82DropboxSessionProxy.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = Com0x82DropboxSessionProxy.m; path = Classes/Com0x82DropboxSessionProxy.m; sourceTree = "<group>"; };
 		3EE509E31353407A001C442C /* Com0x82DropboxClientProxy.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = Com0x82DropboxClientProxy.h; path = Classes/Com0x82DropboxClientProxy.h; sourceTree = "<group>"; };
 		3EE509E41353407A001C442C /* Com0x82DropboxClientProxy.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = Com0x82DropboxClientProxy.m; path = Classes/Com0x82DropboxClientProxy.m; sourceTree = "<group>"; };
+		3EFBC6B014559DA6008272C0 /* DBNSURLResponse.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = DBNSURLResponse.h; sourceTree = "<group>"; };
+		3EFBC6B114559DA6008272C0 /* DBNSURLResponse.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = DBNSURLResponse.m; sourceTree = "<group>"; };
 		AA747D9E0F9514B9006C5449 /* Com0x82Dropbox_Prefix.pch */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Com0x82Dropbox_Prefix.pch; sourceTree = SOURCE_ROOT; };
 		AACBBE490F95108600F1A2B1 /* Foundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Foundation.framework; path = System/Library/Frameworks/Foundation.framework; sourceTree = SDKROOT; };
 		D2AAC07E0554694100DB518D /* libCom0x82Dropbox.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = libCom0x82Dropbox.a; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -349,8 +349,8 @@
 				3E04164D135095A900C66455 /* MPURLRequestParameter.m */,
 				3E041650135095A900C66455 /* NSURL+MPURLParameterAdditions.h */,
 				3E041651135095A900C66455 /* NSURL+MPURLParameterAdditions.m */,
-				3E041652135095A900C66455 /* NSURLResponse+Encoding.h */,
-				3E041653135095A900C66455 /* NSURLResponse+Encoding.m */,
+				3EFBC6B014559DA6008272C0 /* DBNSURLResponse.h */,
+				3EFBC6B114559DA6008272C0 /* DBNSURLResponse.m */,
 			);
 			path = MPOAuth;
 			sourceTree = "<group>";
@@ -408,10 +408,10 @@
 				3E041691135095A900C66455 /* MPOAuthURLResponse.h in Headers */,
 				3E041693135095A900C66455 /* MPURLRequestParameter.h in Headers */,
 				3E041697135095A900C66455 /* NSURL+MPURLParameterAdditions.h in Headers */,
-				3E041699135095A900C66455 /* NSURLResponse+Encoding.h in Headers */,
 				3E04169B135095A900C66455 /* NSString+Dropbox.h in Headers */,
 				3EE509E113534075001C442C /* Com0x82DropboxSessionProxy.h in Headers */,
 				3EE509E51353407A001C442C /* Com0x82DropboxClientProxy.h in Headers */,
+				3EFBC6B214559DA6008272C0 /* DBNSURLResponse.h in Headers */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -515,10 +515,10 @@
 				3E041692135095A900C66455 /* MPOAuthURLResponse.m in Sources */,
 				3E041694135095A900C66455 /* MPURLRequestParameter.m in Sources */,
 				3E041698135095A900C66455 /* NSURL+MPURLParameterAdditions.m in Sources */,
-				3E04169A135095A900C66455 /* NSURLResponse+Encoding.m in Sources */,
 				3E04169C135095A900C66455 /* NSString+Dropbox.m in Sources */,
 				3EE509E213534075001C442C /* Com0x82DropboxSessionProxy.m in Sources */,
 				3EE509E61353407A001C442C /* Com0x82DropboxClientProxy.m in Sources */,
+				3EFBC6B314559DA6008272C0 /* DBNSURLResponse.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -538,7 +538,10 @@
 			baseConfigurationReference = 24DD6D1B1134B66800162E58 /* titanium.xcconfig */;
 			buildSettings = {
 				ALWAYS_SEARCH_USER_PATHS = NO;
-				ARCHS = "$(ARCHS_STANDARD_32_BIT)";
+				ARCHS = (
+					arvm6,
+					"$(ARCHS_STANDARD_32_BIT)",
+				);
 				COPY_PHASE_STRIP = NO;
 				DSTROOT = /tmp/Com0x82Dropbox.dst;
 				GCC_DYNAMIC_NO_PIC = NO;
@@ -558,7 +561,10 @@
 			baseConfigurationReference = 24DD6D1B1134B66800162E58 /* titanium.xcconfig */;
 			buildSettings = {
 				ALWAYS_SEARCH_USER_PATHS = NO;
-				ARCHS = "$(ARCHS_STANDARD_32_BIT)";
+				ARCHS = (
+					arvm6,
+					"$(ARCHS_STANDARD_32_BIT)",
+				);
 				DSTROOT = /tmp/Com0x82Dropbox.dst;
 				GCC_MODEL_TUNING = G5;
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
@@ -574,7 +580,10 @@
 			isa = XCBuildConfiguration;
 			baseConfigurationReference = 24DD6D1B1134B66800162E58 /* titanium.xcconfig */;
 			buildSettings = {
-				ARCHS = "$(ARCHS_STANDARD_32_BIT)";
+				ARCHS = (
+					armv6,
+					"$(ARCHS_STANDARD_32_BIT)",
+				);
 				GCC_C_LANGUAGE_STANDARD = c99;
 				GCC_OPTIMIZATION_LEVEL = 0;
 				GCC_WARN_ABOUT_RETURN_TYPE = YES;
@@ -594,7 +603,10 @@
 			isa = XCBuildConfiguration;
 			baseConfigurationReference = 24DD6D1B1134B66800162E58 /* titanium.xcconfig */;
 			buildSettings = {
-				ARCHS = "$(ARCHS_STANDARD_32_BIT)";
+				ARCHS = (
+					armv6,
+					"$(ARCHS_STANDARD_32_BIT)",
+				);
 				GCC_C_LANGUAGE_STANDARD = c99;
 				GCC_WARN_ABOUT_RETURN_TYPE = YES;
 				GCC_WARN_UNUSED_VARIABLE = YES;

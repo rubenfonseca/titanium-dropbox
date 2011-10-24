@@ -1,141 +1,253 @@
-var key = '9qykzm70fl68zzl';
-var secret = 'f9u07szlqan3g42';
+// This is a test harness for your module
+// You should do something interesting in this harness 
+// to test out the module and to provide instructions 
+// to users on how to use it by example.
 
-var dropbox = require('com.0x82.dropbox');
-var session = dropbox.createSession({
-  key: key,
-  secret: secret
-});
-var client = null;
-
-var win = Ti.UI.createWindow();
-var win1 = Ti.UI.createWindow({
-  backgroundColor: 'white',
-  title: 'Link Dropbox'
+// open a single window
+var window = Ti.UI.createWindow({
+	backgroundColor:'white',
+  title: 'Dropbox module'
 });
 
 var nav = Ti.UI.iPhone.createNavigationGroup({
-  window: win1
-});
-win.add(nav);
-
-var label = Ti.UI.createLabel({
-  text: 'Press "Link Dropbox" and login to test wheter you have set your Dropbox developer account is set up correctly.',
-  top: 96,
-  left: 20,
-  width: 280,
-  height: 101,
-  textAlign: 'center'
-});
-var link = Ti.UI.createButton({
-  title: 'Link Dropbox',
-  top: 219,
-  left: 87,
-  width: 145,
-  height: 37
-});
-link.addEventListener('click', function(e) { 
-  if(link.isLinked)
-    unlinkDropbox();
-  else
-    linkDropbox(); 
-});
-win1.add(label);
-win1.add(link);
-win.open();
-
-var browse_win = Ti.UI.createWindow({
+  window: window
 });
 
-function updateButtons() {
+var navigationWindow = Ti.UI.createWindow();
+navigationWindow.add(nav);
+navigationWindow.open();
+
+var dropbox = require('com.0x82.dropbox');
+Ti.API.info("module is => " + dropbox);
+
+var session = dropbox.createSession({
+  key: '9qykzm70fl68zzl',
+  secret: 'f9u07szlqan3g42'
+});
+Ti.API.info("session is => " + session);
+Ti.API.log("  is Linked? => " + session.isLinked());
+
+var client = dropbox.createClient();
+
+function link_account() {
+  Ti.API.log("auhenticating");
+
   if(session.isLinked()) {
-    client = dropbox.createClient();
-    link.title = 'Unlink Dropbox';
-    link.isLinked = true;
-    nav.open(browse_win, {animated: true});
-  } else {
-    link.title = 'Link Dropbox';
-    link.isLinked = false;
+    alert('You are already linked with dropbox');
+    return;
   }
-}
 
-function linkDropbox() {
   session.showAuthenticationWindow({
     success: function(e) {
-      updateButtons();
+      Ti.API.log("SUCCESS :D");
+      Ti.API.log(e);
+  
+      client = e.client;
+    },
+    cancel: function(e) {
+      Ti.API.log("CANCEL....");
+      Ti.API.log(e);
     }
   });
 }
 
-function unlinkDropbox() {
+function unlink() {
+  if(!session.isLinked()) {
+    alert('No session to unlink');
+    return;
+  }
+
   session.unlink();
-  updateButtons();
+  alert('Unlinked!');
 }
 
-var image_view = Ti.UI.createImageView({
-  top: 0,
-  left: 0,
-  width: '100%',
-  height: '100%',
-});
-browse_win.add(image_view);
-
-var random_button = Ti.UI.createButton({
-  title: 'Random Photo',
-  left: 72,
-  top: 370,
-  width: 176,
-  height: 37
-});
-random_button.addEventListener('click', randomButtonPressed);
-browse_win.add(random_button);
-
-var photos = [];
-var hash = null;
-
-function randomButtonPressed() {
-  client.loadMetadata({
-    path: '/Photos',
-    hash: hash,
+function getAccountInfo() {
+  client.loadAccountInfo({
     success: function(e) {
-      photos = [];
-      hash = e.hash;
-
-      for(var i=0; i < e.contents.length; i++) {
-        if(e.contents[i].path.match(/(.jpg|.png)$/))
-          photos.push(e.contents[i].path);
-      }
-
-      loadRandomPhoto();
-    },
-    unchanged: function(e) {
-      Ti.API.log("unchanged");
-      loadRandomPhoto();
+      Ti.API.log("account success");
+      tableview.footerTitle = JSON.stringify(e);
     },
     error: function(e) {
-      alert(e.error);
+      Ti.API.log("account error");
+      Ti.API.log(e);
     }
   });
 }
 
-function loadRandomPhoto() {
-  if(!photos || photos.length == 0) {
-    alert('You must have at least 1 photo in your Dropbox Photos folder to use this app');
-  } else {
-    var index = Math.floor(Math.random() * photos.length);
-    var path = photos[index];
-
-
-    client.loadThumbnail({
-      path: path,
-      success: function(e) {
-        image_view.image = e.thumbnail;
-      },
-      error: function(e) {
-        alert(e.error);
-      }
-    });
-  }
+function getMetadata() {
+  client.loadMetadata({
+    path:'/Public',
+    success: function(e) {
+      tableview.footerTitle = JSON.stringify(e);
+    }
+  });
 }
 
-setTimeout(updateButtons, 500);
+function getThumbnail() {
+  client.loadThumbnail({
+    path: '/Photos/P1223189.JPG',
+    success: function(e) {
+      Ti.API.log("SUCCESS THUMBNAIL");
+
+      var new_window = Ti.UI.createWindow({title:'Thumbnail'});
+      var image_view = Ti.UI.createImageView({image:e.thumbnail});
+      new_window.add(image_view);
+      nav.open(new_window, {animated:true});
+    },
+    error: function(e) {
+      Ti.API.log("ERROR THUMBNAIL");
+      Ti.API.log(e);
+    }
+  });
+}
+
+function getFile() {
+  client.loadFile({
+    path: '/Photos/P1223189.JPG',
+    success: function(e) {
+      Ti.API.log("SUCCESS FILE");
+
+      var new_window = Ti.UI.createWindow({title:'Full file'});
+      var image_view = Ti.UI.createImageView({image:e.file});
+      new_window.add(image_view);
+      nav.open(new_window, {animated:true});
+    },
+    error: function(e) {
+      Ti.API.log("ERROR FILE");
+      Ti.API.log(e);
+    }
+  });
+}
+
+function createFolder() {
+  client.createFolder({
+    path: '/newfolder',
+    success: function(e) {
+      Ti.API.log("SUCCESS CREATE FOLDER");
+      tableview.footerTitle = JSON.stringify(e);
+    },
+    error: function(e) {
+      Ti.API.log("ERROR CREATE FOLDER");
+      Ti.API.log(e);
+    }
+  });
+}
+
+function deleteFolder() {
+  client.deletePath({
+    path: '/newfolder',
+    success: function(e) {
+      Ti.API.log("SUCCESS DELETE FOLDER");
+      tableview.footerTitle = JSON.stringify(e);
+    },
+    error: function(e) {
+      Ti.API.log("ERROR CREATE FOLDER");
+      Ti.API.log(e);
+    }
+  });
+}
+
+function uploadFile() {
+  Ti.Media.openPhotoGallery({
+    success: function(e) {
+      var tempDir = Ti.Filesystem.createTempDirectory();
+      var mediafile = Ti.Filesystem.getFile(tempDir.nativePath, "foo.jpg");
+      mediafile.write(e.media);
+
+      var progressBar = Ti.UI.createProgressBar({
+        max: 1,
+        min: 0,
+        value: 0,
+        left: 10,
+        right: 10,
+        style: Ti.UI.iPhone.ProgressBarStyle.PLAIN
+      });
+      tableview.footerView = progressBar;
+      progressBar.show();
+
+      client.uploadFile({
+        file: mediafile,
+        path: '/Photos/',
+        success: function(event) {
+          Ti.API.log("UPLOAD SUCCESS");
+          Ti.API.log(event);
+
+          alert('File uploaded!');
+          tableview.footerView = null;
+        },
+        progress: function(event) {
+          Ti.API.log("UPLOAD PROGRESS");
+          Ti.API.log(event);
+
+          progressBar.value = event.progress;
+        },
+        error: function(event) {
+          Ti.API.log("UPLOAD ERROR");
+          Ti.API.log(event);
+          tableview.footerView = null;
+        }
+      });
+    }
+  });
+}
+
+function copyPath() {
+  client.copyPath({
+    fromPath: '/Photos/foo.jpg',
+    toPath: '/Photos/to.jpg',
+    success: function(e) {
+      Ti.API.log("COPY SUCCESS");
+      tableview.footerTitle = JSON.stringify(e);
+      alert('Copied');
+    },
+    error: function(e) {
+      Ti.API.log("COPY ERROR");
+      Ti.API.log(e);
+    }
+  });
+}
+
+function movePath() {
+  client.movePath({
+    fromPath: '/Photos/to.jpg',
+    toPath: '/Photos/bar.jpg',
+    success: function(e) {
+      Ti.API.log("MOVE SUCCESS");
+      tableview.footerTitle = JSON.stringify(e);
+      alert('Moved');
+    },
+    error: function(e) {
+      Ti.API.log("MOVE ERROR");
+      Ti.API.log(e);
+    }
+  });
+}
+
+var data = [
+  {title:'Link account', hasChild:true, callback: link_account, header:'Authentication'},
+  {title:'Unlink account', hasChild:true, callback: unlink},
+  {title:'Get account Info', hasChild:true, callback: getAccountInfo, header: 'API'},
+  {title:'Get path Metadata', hasChild:true, callback: getMetadata},
+  {title:'Load thumbnail', hasChild:true, callback: getThumbnail},
+  {title:'Load full file', hasChild:true, callback: getFile},
+  {title:'Create folder', hasChild:true, callback:createFolder},
+  {title:'Delete folder', hasChild:true, callback:deleteFolder},
+  {title:'Upload file', hasChild:true, callback:uploadFile},
+  {title:'Copy path', hasChild:true, callback: copyPath},
+  {title:'Move path', hasChild:true, callback: movePath},
+];
+
+var tableview = Ti.UI.createTableView({
+  data: data,
+  style: Ti.UI.iPhone.TableViewStyle.GROUPED
+});
+window.add(tableview);
+
+tableview.addEventListener('click', function(e) {
+  if(e.rowData.callback) {
+    tableview.footerTitle = null;
+    e.rowData.callback();
+  }
+});
+
+window.open();
