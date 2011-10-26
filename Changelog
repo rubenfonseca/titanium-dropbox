@@ -1,3 +1,13 @@
+2011-10-26 Rúben Fonseca <fonseka@gmail.com>
+
+	* version 1.0 released, based on the official Dropbox SDK 1.0
+
+	* THIS IS A NEW GENERATION OF THE MODULE!!!! PLEASE DON'T UPGRADE UNLESS
+		YOU READ AND UNDERSTAND THE documentation/index.html FILE!
+
+	* There are no major changes on the API, but the steps necessary to make
+		the app work are VERY VERY VERY DIFFERENT!
+
 2011-10-24 Rúben Fonseca <fonseka@gmail.com>
 
 	* version 0.7 released
