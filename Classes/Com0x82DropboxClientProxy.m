@@ -10,6 +10,8 @@
 #import "TiBlob.h"
 #import "TiFile.h"
 
+#import "DBMetadata+Dumper.h"
+
 @interface Com0x82DropboxClientProxy () <DBRestClientDelegate>
 @property (nonatomic, readonly) DBRestClient* restClient;
 @end
@@ -144,7 +146,7 @@
   ENSURE_TYPE(path, NSString);
   ENSURE_TYPE_OR_NIL(size, NSString);
   if(size == nil)
-    size = @"iphone_bestfit";
+    size = @"small";
   
   thumbnailTempPath = [NSTemporaryDirectory() stringByAppendingString:@"thumbnail.jpg"];
   [self.restClient loadThumbnail:path ofSize:size intoPath:thumbnailTempPath];
@@ -288,15 +290,17 @@
   id file = [args objectForKey:@"file"];
   id path = [args objectForKey:@"path"];
   id fileName = [args objectForKey:@"filename"];
+  id parentRev = [args objectForKey:@"parentRev"];
   
   ENSURE_TYPE(file, TiFile);
   ENSURE_TYPE(path, NSString);
   ENSURE_TYPE_OR_NIL(fileName, NSString);
+  ENSURE_TYPE_OR_NIL(parentRev, NSString);
   
   if(fileName == nil)
     fileName = [[file path] lastPathComponent];
   
-  [self.restClient uploadFile:fileName toPath:path fromPath:[file path]];
+  [self.restClient uploadFile:fileName toPath:path withParentRev:parentRev fromPath:[file path]];
 }
 
 - (void)restClient:(DBRestClient*)client uploadedFile:(NSString*)destPath from:(NSString*)srcPath {
@@ -391,6 +395,11 @@
     restClient.delegate = self;
   }
   
+  if(![[DBSession sharedSession] isLinked]) {
+    [self throwException:@"Dropbox Session is not Linked" subreason:@"Please link your session" location:CODELOCATION];
+    return nil;
+  }
+    
   return restClient;
 }
 

@@ -13,16 +13,27 @@
 
 @implementation Com0x82DropboxSessionProxy
 
-@synthesize key, secret;
+@synthesize key, secret, root;
 
 #pragma mark Memory Management
+-(id)init {
+  if(self = [super init]) {
+    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(loginResult:) name:@"DropboxLoginResult" object:nil];
+  }
+  
+  return self;
+}
+
 -(void)dealloc {
+  [[NSNotificationCenter defaultCenter] removeObserver:self name:@"DropboxLoginResult" object:nil];
+  
   if(session != nil) {
     RELEASE_TO_NIL(session);
   }
   
   RELEASE_TO_NIL(key);
   RELEASE_TO_NIL(secret);
+  RELEASE_TO_NIL(root);
   
   [super dealloc];
 }
@@ -33,10 +44,10 @@
 }
 
 -(void)unlink:(id)args {
-  [[self _session] unlink];
+  [[self _session] unlinkAll];
 }
 
--(void)showAuthenticationWindow:(id)args {
+-(void)link:(id)args {
   ENSURE_UI_THREAD_1_ARG(args);
   ENSURE_SINGLE_ARG(args, NSDictionary);
   
@@ -49,10 +60,8 @@
   authenticateSuccessCallback = [success retain];
   authenticateCancelCallback = [cancel retain];
   
-  [[self _session] unlink];
-  DBLoginController *controller = [[DBLoginController new] autorelease];
-  controller.delegate = self;
-  [controller presentFromController:[TiApp controller]];
+  [self unlink:nil];
+  [[DBSession sharedSession] link];
 }
 
 #pragma mark Internal stuff
@@ -62,24 +71,29 @@
       [self throwException:@"missing key or secret" subreason:nil location:CODELOCATION];
     }
     
-    session = [[DBSession alloc] initWithConsumerKey:key consumerSecret:secret];
+    session = [[DBSession alloc] initWithAppKey:key appSecret:secret root:root];
+    session.delegate = self;
     [DBSession setSharedSession:session];
-    [session release];
   }
   
   return session;
 }
 
-- (void)loginControllerDidLogin:(DBLoginController*)controller {
-  if(authenticateSuccessCallback) {
-    NSDictionary *event = [NSDictionary dictionaryWithObjectsAndKeys: [[[Com0x82DropboxClientProxy alloc] _initWithPageContext:self.pageContext] autorelease], @"client", nil];
-    [self _fireEventToListener:@"success" withObject:event listener:authenticateSuccessCallback thisObject:nil];
-  }
+- (void)sessionDidReceiveAuthorizationFailure:(DBSession *)session userId:(NSString *)userId {
+  [self fireEvent:@"reauth" withObject:nil];
 }
-- (void)loginControllerDidCancel:(DBLoginController*)controller {
-  if(authenticateCancelCallback) {
-    NSDictionary *event = [NSDictionary dictionary];
-    [self _fireEventToListener:@"cancel" withObject:event listener:authenticateCancelCallback thisObject:nil];
+
+#pragma mark DropboxLoginResult
+-(void)loginResult:(NSNotification *)note {
+  BOOL result = [[note.userInfo objectForKey:@"result"] boolValue];
+  
+  if(result) {
+    Com0x82DropboxClientProxy *clientProxy = [[[Com0x82DropboxClientProxy alloc] init] autorelease];
+    NSDictionary *event = [NSDictionary dictionaryWithObject:clientProxy forKey:@"client"];
+    
+    [self _fireEventToListener:@"success" withObject:event listener:authenticateSuccessCallback thisObject:self];
+  } else {
+    [self _fireEventToListener:@"cancel" withObject:nil listener:authenticateCancelCallback thisObject:self];
   }
 }
 

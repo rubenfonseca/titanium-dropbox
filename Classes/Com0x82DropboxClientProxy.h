@@ -8,7 +8,6 @@
 
 #import <Foundation/Foundation.h>
 #import "TiProxy.h"
-#import "DropboxSDK.h"
 
 @interface Com0x82DropboxClientProxy : TiProxy {
   DBRestClient *restClient;

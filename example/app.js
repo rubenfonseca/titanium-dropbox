@@ -21,8 +21,9 @@ var dropbox = require('com.0x82.dropbox');
 Ti.API.info("module is => " + dropbox);
 
 var session = dropbox.createSession({
-  key: '9qykzm70fl68zzl',
-  secret: 'f9u07szlqan3g42'
+  key: 'kx995bnohs7qvdj',
+  secret: '7wuv1m3a1ldcm2x',
+  root: dropbox.DROPBOX_ROOT_DROPBOX
 });
 Ti.API.info("session is => " + session);
 Ti.API.log("  is Linked? => " + session.isLinked());
@@ -37,7 +38,7 @@ function link_account() {
     return;
   }
 
-  session.showAuthenticationWindow({
+  session.link({
     success: function(e) {
       Ti.API.log("SUCCESS :D");
       Ti.API.log(e);

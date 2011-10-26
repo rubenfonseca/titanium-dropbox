@@ -8,6 +8,7 @@
 #import "TiBase.h"
 #import "TiHost.h"
 #import "TiUtils.h"
+#import "TiApp.h"
 
 @implementation Com0x82DropboxModule
 
@@ -36,6 +37,23 @@
 	NSLog(@"[INFO] %@ loaded",self);
 }
 
+-(void)resumed:(id)note {  
+  NSDictionary *launchOptions = [[TiApp app] launchOptions];
+  if(launchOptions != nil) {
+    NSString *urlString = [launchOptions objectForKey:@"url"];
+    if(urlString != nil && [urlString hasPrefix:@"db"]) {
+      NSURL *url = [NSURL URLWithString:urlString];
+      if([[DBSession sharedSession] handleOpenURL:url]) {
+        if([[DBSession sharedSession] isLinked]) {
+          [[NSNotificationCenter defaultCenter] postNotificationName:@"DropboxLoginResult" object:self userInfo:[NSDictionary dictionaryWithObject:NUMBOOL(true) forKey:@"result"]];
+        } else {
+          [[NSNotificationCenter defaultCenter] postNotificationName:@"DropboxLoginResult" object:self userInfo:[NSDictionary dictionaryWithObject:NUMBOOL(false) forKey:@"result"]];
+        }
+      }
+    }
+  }
+}
+
 #pragma mark Cleanup 
 
 -(void)dealloc
@@ -46,27 +64,8 @@
 
 #pragma mark Listener Notifications
 
-/*
--(void)_listenerAdded:(NSString *)type count:(int)count
-{
-	if (count == 1 && [type isEqualToString:@"my_event"])
-	{
-		// the first (of potentially many) listener is being added 
-		// for event named 'my_event'
-	}
-}
-
--(void)_listenerRemoved:(NSString *)type count:(int)count
-{
-	if (count == 0 && [type isEqualToString:@"my_event"])
-	{
-		// the last listener called for event named 'my_event' has
-		// been removed, we can optionally clean up any resources
-		// since no body is listening at this point for that event
-	}
-}
- */
-
 #pragma Public APIs
+MAKE_SYSTEM_STR(DROPBOX_ROOT_APP_FOLDER, kDBRootAppFolder)
+MAKE_SYSTEM_STR(DROPBOX_ROOT_DROPBOX, kDBRootDropbox)
 
 @end
