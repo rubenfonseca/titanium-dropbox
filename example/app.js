@@ -77,7 +77,7 @@ function getAccountInfo() {
 
 function getMetadata() {
   client.loadMetadata({
-    path:'/Public',
+    path:'/Photos/foo.jpg',
     success: function(e) {
       tableview.footerTitle = JSON.stringify(e);
     }
@@ -169,6 +169,7 @@ function uploadFile() {
       client.uploadFile({
         file: mediafile,
         path: '/Photos/',
+        overwrite: true,
         success: function(event) {
           Ti.API.log("UPLOAD SUCCESS");
           Ti.API.log(event);

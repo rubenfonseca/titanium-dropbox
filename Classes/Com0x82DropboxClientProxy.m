@@ -9,8 +9,10 @@
 #import "Com0x82DropboxClientProxy.h"
 #import "TiBlob.h"
 #import "TiFile.h"
+#import "TiUtils.h"
 
 #import "DBMetadata+Dumper.h"
+#import "DBRestClient+OverwriteUpload.h"
 
 @interface Com0x82DropboxClientProxy () <DBRestClientDelegate>
 @property (nonatomic, readonly) DBRestClient* restClient;
@@ -291,6 +293,7 @@
   id path = [args objectForKey:@"path"];
   id fileName = [args objectForKey:@"filename"];
   id parentRev = [args objectForKey:@"parentRev"];
+  BOOL overwrite = [TiUtils boolValue:@"overwrite" properties:args def:NO];
   
   ENSURE_TYPE(file, TiFile);
   ENSURE_TYPE(path, NSString);
@@ -300,11 +303,13 @@
   if(fileName == nil)
     fileName = [[file path] lastPathComponent];
   
-  [self.restClient uploadFile:fileName toPath:path withParentRev:parentRev fromPath:[file path]];
+  [self.restClient uploadFile:fileName toPath:path withParentRev:parentRev fromPath:[file path] withOverwrite:overwrite];
 }
 
-- (void)restClient:(DBRestClient*)client uploadedFile:(NSString*)destPath from:(NSString*)srcPath {
-  NSDictionary *event = [NSDictionary dictionaryWithObject:destPath forKey:@"path"];
+- (void)restClient:(DBRestClient*)client uploadedFile:(NSString *)destPath from:(NSString*)srcPath metadata:(DBMetadata*)metadata {
+  NSMutableDictionary *event = [NSMutableDictionary dictionary];
+  [metadata dumpToDictionary:event];
+  [event setValue:destPath forKey:@"path"];
   
   if(uploadFileSuccessCallback)
     [self _fireEventToListener:@"success" withObject:event listener:uploadFileSuccessCallback thisObject:nil];

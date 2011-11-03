@@ -103,6 +103,8 @@
 		3E08DE321456EAE30091E8DA /* UIAlertView+Dropbox.m in Sources */ = {isa = PBXBuildFile; fileRef = 3E08DDE21456EAE30091E8DA /* UIAlertView+Dropbox.m */; };
 		3E08DE3B14585AE90091E8DA /* DBMetadata+Dumper.h in Headers */ = {isa = PBXBuildFile; fileRef = 3E08DE3914585AE90091E8DA /* DBMetadata+Dumper.h */; };
 		3E08DE3C14585AE90091E8DA /* DBMetadata+Dumper.m in Sources */ = {isa = PBXBuildFile; fileRef = 3E08DE3A14585AE90091E8DA /* DBMetadata+Dumper.m */; };
+		3EA8F01A1462D3F8002B8438 /* DBRestClient+OverwriteUpload.h in Headers */ = {isa = PBXBuildFile; fileRef = 3EA8F0181462D3F8002B8438 /* DBRestClient+OverwriteUpload.h */; };
+		3EA8F01B1462D3F8002B8438 /* DBRestClient+OverwriteUpload.m in Sources */ = {isa = PBXBuildFile; fileRef = 3EA8F0191462D3F8002B8438 /* DBRestClient+OverwriteUpload.m */; };
 		3EE509E113534075001C442C /* Com0x82DropboxSessionProxy.h in Headers */ = {isa = PBXBuildFile; fileRef = 3EE509DF13534075001C442C /* Com0x82DropboxSessionProxy.h */; };
 		3EE509E213534075001C442C /* Com0x82DropboxSessionProxy.m in Sources */ = {isa = PBXBuildFile; fileRef = 3EE509E013534075001C442C /* Com0x82DropboxSessionProxy.m */; };
 		3EE509E51353407A001C442C /* Com0x82DropboxClientProxy.h in Headers */ = {isa = PBXBuildFile; fileRef = 3EE509E31353407A001C442C /* Com0x82DropboxClientProxy.h */; };
@@ -204,6 +206,8 @@
 		3E08DDE21456EAE30091E8DA /* UIAlertView+Dropbox.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "UIAlertView+Dropbox.m"; sourceTree = "<group>"; };
 		3E08DE3914585AE90091E8DA /* DBMetadata+Dumper.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = "DBMetadata+Dumper.h"; path = "Classes/DBMetadata+Dumper.h"; sourceTree = "<group>"; };
 		3E08DE3A14585AE90091E8DA /* DBMetadata+Dumper.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = "DBMetadata+Dumper.m"; path = "Classes/DBMetadata+Dumper.m"; sourceTree = "<group>"; };
+		3EA8F0181462D3F8002B8438 /* DBRestClient+OverwriteUpload.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = "DBRestClient+OverwriteUpload.h"; path = "Classes/DBRestClient+OverwriteUpload.h"; sourceTree = "<group>"; };
+		3EA8F0191462D3F8002B8438 /* DBRestClient+OverwriteUpload.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = "DBRestClient+OverwriteUpload.m"; path = "Classes/DBRestClient+OverwriteUpload.m"; sourceTree = "<group>"; };
 		3EE509DF13534075001C442C /* Com0x82DropboxSessionProxy.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = Com0x82DropboxSessionProxy.h; path = Classes/Com0x82DropboxSessionProxy.h; sourceTree = "<group>"; };
 		3EE509E013534075001C442C /* Com0x82DropboxSessionProxy.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = Com0x82DropboxSessionProxy.m; path = Classes/Com0x82DropboxSessionProxy.m; sourceTree = "<group>"; };
 		3EE509E31353407A001C442C /* Com0x82DropboxClientProxy.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = Com0x82DropboxClientProxy.h; path = Classes/Com0x82DropboxClientProxy.h; sourceTree = "<group>"; };
@@ -271,6 +275,8 @@
 				3EE509E41353407A001C442C /* Com0x82DropboxClientProxy.m */,
 				3E08DE3914585AE90091E8DA /* DBMetadata+Dumper.h */,
 				3E08DE3A14585AE90091E8DA /* DBMetadata+Dumper.m */,
+				3EA8F0181462D3F8002B8438 /* DBRestClient+OverwriteUpload.h */,
+				3EA8F0191462D3F8002B8438 /* DBRestClient+OverwriteUpload.m */,
 			);
 			name = Classes;
 			sourceTree = "<group>";
@@ -456,6 +462,7 @@
 				3E08DE161456EAE30091E8DA /* SBJsonWriter.h in Headers */,
 				3E08DE171456EAE30091E8DA /* UIAlertView+Dropbox.h in Headers */,
 				3E08DE3B14585AE90091E8DA /* DBMetadata+Dumper.h in Headers */,
+				3EA8F01A1462D3F8002B8438 /* DBRestClient+OverwriteUpload.h in Headers */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -567,6 +574,7 @@
 				3E08DE311456EAE30091E8DA /* NSString+Dropbox.m in Sources */,
 				3E08DE321456EAE30091E8DA /* UIAlertView+Dropbox.m in Sources */,
 				3E08DE3C14585AE90091E8DA /* DBMetadata+Dumper.m in Sources */,
+				3EA8F01B1462D3F8002B8438 /* DBRestClient+OverwriteUpload.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

@@ -104,6 +104,11 @@ Uploads a new file to Dropbox. It accepts a dictionary with the following option
 
 - path[string]: the path where the file will be uplaoded<br />
 - file[string]: the path of the file you want to upload<br />
+- parentRev[string]: [optional] the previous revision of the file. This value can be obtained
+  using the .getMetadata method, under the key `rev`
+- overwrite[boolean]: [optional] if `true`, the upload doesn't create a new file
+  if the target path already exists. The default value is `false`, so if the
+  target file already exists, a new file is created, and never overwritten. 
 - success[callback]: called if the upload succeeds<br />
 - error[callback]: called if the upload fails<br />
 - progress[callback]: called during the upload. It has a 'progress' event
