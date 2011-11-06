@@ -15,6 +15,10 @@ Please follow the guide available [here](http://wiki.appcelerator.org/display/ti
 
 Also, please follow the additional instructions below.
 
+## Changelog
+
+See [here](changelog.html)
+
 ## Accessing the dropbox Module
 
 To access this module from JavaScript, you would do the following:
