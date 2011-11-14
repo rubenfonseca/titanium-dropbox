@@ -21,6 +21,15 @@
 @implementation Com0x82DropboxClientProxy
 
 #pragma mark Memory management 
+-(id)init {
+  if(self = [super init]) {
+    loadFileDictionary = [[NSMutableDictionary alloc] init];
+    uploadFileDictionary = [[NSMutableDictionary alloc] init];
+  }
+  
+  return self;
+}
+
 -(void)dealloc {
   RELEASE_TO_NIL(restClient);
   
@@ -35,20 +44,14 @@
   RELEASE_TO_NIL(loadThumbnailErrorCallback);
   RELEASE_TO_NIL(thumbnailTempPath);
   
-  RELEASE_TO_NIL(loadFileSuccessCallback);
-  RELEASE_TO_NIL(loadFileErrorCallback);
-  RELEASE_TO_NIL(loadFileProgressCallback);
-  RELEASE_TO_NIL(fileTempPath);
+  RELEASE_TO_NIL(loadFileDictionary);
+  RELEASE_TO_NIL(uploadFileDictionary);
   
   RELEASE_TO_NIL(createFolderSuccessCallback);
   RELEASE_TO_NIL(createFolderErrorCallback);
   
   RELEASE_TO_NIL(deletePathSuccessCallback);
   RELEASE_TO_NIL(deletePathErrorCallback);
-  
-  RELEASE_TO_NIL(uploadFileSuccessCallback);
-  RELEASE_TO_NIL(uploadFileProgressCallback);
-  RELEASE_TO_NIL(uploadFileErrorCallback);
   
   RELEASE_TO_NIL(copyPathSuccessCallback);
   RELEASE_TO_NIL(copyPathErrorCallback);
@@ -169,6 +172,11 @@
     [self _fireEventToListener:@"error" withObject:event listener:loadThumbnailErrorCallback thisObject:nil];
 }
 
+#define kLoadFileSuccessCallback @"LoadfileSuccessCallback"
+#define kLoadFileErrorCallback @"LoadFileErrorCallback"
+#define kLoadFileProgressCallback @"LoadFileProgressCallback"
+#define kLoadFileTempFilePath @"LoadFileTempFilePath"
+
 -(void)loadFile:(id)args {
   ENSURE_UI_THREAD_1_ARG(args);
   ENSURE_SINGLE_ARG(args, NSDictionary);
@@ -177,14 +185,22 @@
   id error = [args objectForKey:@"error"];
   id progress = [args objectForKey:@"progress"];
   
-  RELEASE_AND_REPLACE(loadFileSuccessCallback, success);
-  RELEASE_AND_REPLACE(loadFileErrorCallback, error);
-  RELEASE_AND_REPLACE(loadFileProgressCallback, progress);
-  
   id path = [args objectForKey:@"path"];
   ENSURE_TYPE(path, NSString);
   
-  fileTempPath = [NSTemporaryDirectory() stringByAppendingString:@"file"];
+  CFUUIDRef uuid = CFUUIDCreate(nil);
+  NSString *uuidString = (NSString*)CFUUIDCreateString(nil, uuid);
+  CFRelease(uuid);
+
+  NSString *fileTempPath = [NSTemporaryDirectory() stringByAppendingString:uuidString];
+  NSMutableDictionary *callbacks = [NSMutableDictionary dictionaryWithObjectsAndKeys:
+                                      success, kLoadFileSuccessCallback,
+                                      error, kLoadFileErrorCallback,
+                                      progress, kLoadFileProgressCallback,
+                                      fileTempPath, kLoadFileTempFilePath, nil];
+  
+  [loadFileDictionary setValue:callbacks forKey:fileTempPath];
+  
   [self.restClient loadFile:path intoPath:fileTempPath];
 }
 
@@ -192,23 +208,34 @@
   NSMutableDictionary *event = [NSMutableDictionary dictionary];
   [event setValue:NULL_IF_NIL(contentType) forKey:@"content-type"];
   
-  TiBlob *blob = [[[TiBlob alloc] initWithFile:fileTempPath] autorelease];
+  NSMutableDictionary *callbacks = [loadFileDictionary valueForKey:destPath];
+  
+  TiBlob *blob = [[[TiBlob alloc] initWithFile:destPath] autorelease];
   [event setValue:blob forKey:@"file"];
   
-  if(loadFileSuccessCallback)
-    [self _fireEventToListener:@"success" withObject:event listener:loadFileSuccessCallback thisObject:nil];
+  if([callbacks valueForKey:kLoadFileSuccessCallback])
+    [self _fireEventToListener:@"success" withObject:event listener:[callbacks valueForKey:kLoadFileSuccessCallback] thisObject:nil];
+  
+  [loadFileDictionary removeObjectForKey:destPath];
 }
 - (void)restClient:(DBRestClient*)client loadProgress:(CGFloat)progress forFile:(NSString*)destPath {
   NSDictionary *event = [NSDictionary dictionaryWithObject:NUMFLOAT(progress) forKey:@"progress"];
   
-  if(loadFileProgressCallback)
-    [self _fireEventToListener:@"progress" withObject:event listener:loadFileProgressCallback thisObject:nil];
+  NSMutableDictionary *callbacks = [loadFileDictionary valueForKey:destPath];
+  
+  if([callbacks valueForKey:kLoadFileProgressCallback])
+    [self _fireEventToListener:@"progress" withObject:event listener:[callbacks valueForKey:kLoadFileProgressCallback] thisObject:nil];
 }
 - (void)restClient:(DBRestClient*)client loadFileFailedWithError:(NSError*)error {
   NSDictionary *event = error.userInfo;
   
-  if(loadFileErrorCallback)
-    [self _fireEventToListener:@"error" withObject:event listener:loadFileErrorCallback thisObject:nil];
+  NSString *destPath = [[error userInfo] valueForKey:@"destinationPath"];
+  NSMutableDictionary *callbacks = [loadFileDictionary valueForKey:destPath];
+  
+  if([callbacks valueForKey:kLoadFileErrorCallback])
+    [self _fireEventToListener:@"error" withObject:event listener:[callbacks valueForKey:kLoadFileErrorCallback] thisObject:nil];
+  
+  [loadFileDictionary removeObjectForKey:destPath];
 }
 
 -(void)cancelFileLoad:(id)args {
@@ -277,6 +304,10 @@
     [self _fireEventToListener:@"error" withObject:event listener:deletePathErrorCallback thisObject:nil];
 }
 
+#define kUploadFileSuccessCallback @"UploadFileSuccessCallback"
+#define kUploadFileErrorCallback @"UploadFileErrorCallback"
+#define kUploadFileProgressCallback @"UploadFileProgressCallback"
+
 -(void)uploadFile:(id)args {
   ENSURE_UI_THREAD_1_ARG(args);
   ENSURE_SINGLE_ARG(args, NSDictionary);
@@ -284,10 +315,6 @@
   id success = [args objectForKey:@"success"];
   id progress = [args objectForKey:@"progress"];
   id error = [args objectForKey:@"error"];
-  
-  RELEASE_AND_REPLACE(uploadFileSuccessCallback, success);
-  RELEASE_AND_REPLACE(uploadFileProgressCallback, progress);
-  RELEASE_AND_REPLACE(uploadFileErrorCallback, error);
   
   id file = [args objectForKey:@"file"];
   id path = [args objectForKey:@"path"];
@@ -302,6 +329,12 @@
   
   if(fileName == nil)
     fileName = [[file path] lastPathComponent];
+
+  NSMutableDictionary *callbacks = [NSMutableDictionary dictionaryWithObjectsAndKeys:
+                                      success, kUploadFileSuccessCallback,
+                                      error, kUploadFileErrorCallback,
+                                      progress, kUploadFileProgressCallback, nil];
+  [uploadFileDictionary setValue:callbacks forKey:[file path]];
   
   [self.restClient uploadFile:fileName toPath:path withParentRev:parentRev fromPath:[file path] withOverwrite:overwrite];
 }
@@ -311,8 +344,12 @@
   [metadata dumpToDictionary:event];
   [event setValue:destPath forKey:@"path"];
   
-  if(uploadFileSuccessCallback)
-    [self _fireEventToListener:@"success" withObject:event listener:uploadFileSuccessCallback thisObject:nil];
+  NSMutableDictionary *callbacks = [uploadFileDictionary valueForKey:srcPath];
+  
+  if([callbacks valueForKey:kUploadFileSuccessCallback])
+    [self _fireEventToListener:@"success" withObject:event listener:[callbacks valueForKey:kUploadFileSuccessCallback] thisObject:nil];
+  
+  [uploadFileDictionary removeObjectForKey:srcPath];
 }
 - (void)restClient:(DBRestClient*)client uploadProgress:(CGFloat)progress 
            forFile:(NSString*)destPath from:(NSString*)srcPath {
@@ -320,14 +357,20 @@
   [event setValue:NUMFLOAT(progress) forKey:@"progress"];
   [event setValue:destPath forKey:@"path"];
   
-  if(uploadFileProgressCallback)
-    [self _fireEventToListener:@"progress" withObject:event listener:uploadFileProgressCallback thisObject:nil];
+  NSMutableDictionary *callbacks = [uploadFileDictionary valueForKey:srcPath];
+  
+  if([callbacks valueForKey:kUploadFileProgressCallback])
+    [self _fireEventToListener:@"progress" withObject:event listener:[callbacks valueForKey:kUploadFileProgressCallback] thisObject:nil];
 }
 - (void)restClient:(DBRestClient*)client uploadFileFailedWithError:(NSError*)error {
   NSDictionary *event = error.userInfo;
   
-  if(uploadFileErrorCallback)
-    [self _fireEventToListener:@"error" withObject:event listener:uploadFileErrorCallback thisObject:nil];
+  NSString *srcPath = [[error userInfo] valueForKey:@"sourcePath"];
+  NSMutableDictionary *callbacks = [uploadFileDictionary valueForKey:srcPath];
+  
+  if([callbacks valueForKey:kUploadFileErrorCallback])
+    [self _fireEventToListener:@"error" withObject:event listener:[callbacks valueForKey:kUploadFileErrorCallback] thisObject:nil];
+  [callbacks removeObjectForKey:srcPath];
 }
 
 -(void)copyPath:(id)args {

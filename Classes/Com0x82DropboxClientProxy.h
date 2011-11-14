@@ -23,20 +23,14 @@
   KrollCallback *loadThumbnailErrorCallback;
   NSString *thumbnailTempPath;
   
-  KrollCallback *loadFileSuccessCallback;
-  KrollCallback *loadFileErrorCallback;
-  KrollCallback *loadFileProgressCallback;
-  NSString *fileTempPath;
+  NSMutableDictionary *loadFileDictionary;
+  NSMutableDictionary *uploadFileDictionary;
   
   KrollCallback *createFolderSuccessCallback;
   KrollCallback *createFolderErrorCallback;
   
   KrollCallback *deletePathSuccessCallback;
   KrollCallback *deletePathErrorCallback;
-  
-  KrollCallback *uploadFileSuccessCallback;
-  KrollCallback *uploadFileProgressCallback;
-  KrollCallback *uploadFileErrorCallback;
   
   KrollCallback *copyPathSuccessCallback;
   KrollCallback *copyPathErrorCallback;
