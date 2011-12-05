@@ -17,7 +17,19 @@
   [dict setObject:NULL_IF_NIL(lastModifiedDate) forKey:@"lastModifiedDate"];
   [dict setObject:NULL_IF_NIL(path) forKey:@"path"];
   [dict setObject:NUMBOOL(isDirectory) forKey:@"isDirectory"];
-  [dict setObject:NULL_IF_NIL(contents) forKey:@"contents"];
+	
+	if(contents) {
+		NSMutableArray *contentsArray = [NSMutableArray array];
+		
+		for(DBMetadata *m in contents) {
+			NSMutableDictionary *d = [NSMutableDictionary dictionary];
+			[m dumpToDictionary:d];
+			[contentsArray addObject:d];
+		}
+		
+		[dict setObject:contentsArray forKey:@"contents"];
+	}
+	
   [dict setObject:NULL_IF_NIL(hash) forKey:@"hash"];
   [dict setObject:NULL_IF_NIL(humanReadableSize) forKey:@"humanReadableSize"];
   [dict setObject:NULL_IF_NIL(root) forKey:@"root"];

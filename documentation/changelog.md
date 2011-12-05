@@ -1,3 +1,9 @@
+- 2011-12-05 Ruben Fonseca <fonseka@gmail.com>
+
+    * version 1.4 released
+
+    * fixed a bug on loadMetadata when there we nested directiories
+
 - 2011-11-06 Ruben Fonseca <fonseka@gmail.com>
 
     * version 1.2 released
