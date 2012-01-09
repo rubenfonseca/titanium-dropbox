@@ -65,6 +65,10 @@ You can see the result on the following screenshot:
 Please notice that if you change your api credentials, you must go to your 
 Info.plist file again and change the api-key on your URL Schemes.
 
+*HOWVER*, if after you first edit the `Info.plist` file, you copy the file to the
+root directory of your project, Titanium will automatically pickup the file
+everytime the app is compiled! So you will never have to edit the file again!
+
 ## Reference
 
 Here's the module API.

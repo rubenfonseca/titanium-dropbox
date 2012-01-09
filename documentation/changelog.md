@@ -1,3 +1,9 @@
+- 2012-01-09 Ruben Fonseca <fonseka@gmail.com>
+  
+    * version 1.5 released
+
+    * no code changes, just better documentation
+
 - 2011-12-05 Ruben Fonseca <fonseka@gmail.com>
 
     * version 1.4 released

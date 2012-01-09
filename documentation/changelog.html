@@ -1,0 +1,287 @@
+<!DOCTYPE html>  
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+  <title>changelog</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <style>
+/* 
+   This document has been created with Marked.app <http://markedapp.com>, Copyright 2011 Brett Terpstra
+   Please leave this notice in place, along with any additional credits below.
+   ---------------------------------------------------------------
+   Some simple Github-like styles, with syntax highlighting CSS via Pygments (requires custom processor).
+   via https://github.com/alampros/Docter
+*/
+html {
+	margin:0;
+	padding:1em;
+}
+body{
+    -webkit-font-smoothing: antialiased;
+	font: 13.34px helvetica,arial,freesans,clean,sans-serif;
+	line-height: 1.4em;
+	color: #333;
+	border: none;
+	line-height: 1.5;
+	margin: 0 auto;
+    max-width: 900px; 
+	text-align:left;
+	color:black;
+    background:#fff;
+}
+
+img {max-width:100%}
+
+@media screen {
+    #wrapper { padding:9px; background:#F8F8F8;	border:1px solid #E9E9E9;}    
+    body.inverted, .inverted #wrapper {
+        color: #eee;
+        background:#333;
+        border-color:#555
+    }
+    .inverted h2 {
+        border-color:#555
+    }
+}
+h1 {
+	font-size: 170%;
+	border-top: 4px solid #aaa;
+	padding-top: .5em;
+	margin-top: 1.5em;
+}
+
+h1:first-child {
+	margin-top: 0 !important;
+	padding-top: .25em !important;
+	border-top: none !important;
+}
+
+h2 {
+	font-size: 150%;
+	margin-top: 1.5em;
+	border-top: 4px solid #e0e0e0;
+	padding-top: .5em;
+}
+
+h3 {
+	margin-top: 1em;
+}
+
+p {
+	margin: 1em 0!important;
+	line-height: 1.5em!important;
+}
+
+pre, code {
+    font: 12px 'Bitstream Vera Sans Mono','Courier',monospace;
+}
+pre {
+    -webkit-box-shadow: rgba(0, 0, 0, 0.0664062) 0px 1px 2px 0px inset;
+    background-color: #EEE;
+    border: #ddd 1px solid;
+    color: #444;
+    display: block;
+    margin: 12px 0;
+    overflow: auto;
+    padding: 5px;
+    white-space: pre;
+    max-width:100%;
+    overflow:auto;
+}
+code {
+    background-color: ghostWhite;
+    color: #444!important;
+    padding: 0 .2em;
+    border: 1px solid #DEDEDE;
+}
+pre code {
+    padding: 0!important;
+    font-size: 12px!important;
+    background-color: #EEE!important;
+    border: none!important;
+    overflow:visible;
+}
+a, a code {
+	color: #4183C4;
+	text-decoration:none;
+}
+
+table td {
+	border-bottom: 1px solid #DDD!important;
+	padding: .2em 1em!important;
+}
+
+.shadow{
+	-webkit-box-shadow:0 5px 15px #000;
+	-moz-box-shadow:0 5px 15px #000;
+	box-shadow:0 5px 15px #000;		
+}
+
+
+.c{color:#998;font-style:italic;}
+.err{color:#a61717;background-color:#e3d2d2;}
+.k{font-weight:bold;}
+.o{font-weight:bold;}
+.cm{color:#998;font-style:italic;}
+.cp{color:#999;font-weight:bold;}
+.c1{color:#998;font-style:italic;}
+.cs{color:#999;font-weight:bold;font-style:italic;}
+.gd{color:#000;background-color:#fdd;}
+.gd .x{color:#000;background-color:#faa;}
+.ge{font-style:italic;}
+.gr{color:#a00;}
+.gh{color:#999;}
+.gi{color:#000;background-color:#dfd;}
+.gi .x{color:#000;background-color:#afa;}
+.go{color:#888;}
+.gp{color:#555;}
+.gs{font-weight:bold;}
+.gu{color:#800080;font-weight:bold;}
+.gt{color:#a00;}
+.kc{font-weight:bold;}
+.kd{font-weight:bold;}
+.kn{font-weight:bold;}
+.kp{font-weight:bold;}
+.kr{font-weight:bold;}
+.kt{color:#458;font-weight:bold;}
+.m{color:#099;}
+.s{color:#d14;}
+.na{color:#008080;}
+.nb{color:#0086B3;}
+.nc{color:#458;font-weight:bold;}
+.no{color:#008080;}
+.ni{color:#800080;}
+.ne{color:#900;font-weight:bold;}
+.nf{color:#900;font-weight:bold;}
+.nn{color:#555;}
+.nt{color:#000080;}
+.nv{color:#008080;}
+.ow{font-weight:bold;}
+.w{color:#bbb;}
+.mf{color:#099;}
+.mh{color:#099;}
+.mi{color:#099;}
+.mo{color:#099;}
+.sb{color:#d14;}
+.sc{color:#d14;}
+.sd{color:#d14;}
+.s2{color:#d14;}
+.se{color:#d14;}
+.sh{color:#d14;}
+.si{color:#d14;}
+.sx{color:#d14;}
+.sr{color:#009926;}
+.s1{color:#d14;}
+.ss{color:#990073;}
+.bp{color:#999;}
+.vc{color:#008080;}
+.vg{color:#008080;}
+.vi{color:#008080;}
+.il{color:#099;}
+
+.poetry pre {
+    font-family:Georgia, Garamond, serif !important;
+    font-style:italic;
+    font-size:110% !important;
+    line-height:1.6em;
+    display:block;
+    margin-left:1em;
+}
+
+.poetry pre code {
+    font-family:Georgia, Garamond, serif !important;
+}
+
+sup,sub,a.footnote {
+	font-size: 1.4ex;
+	height: 0;
+	line-height: 1;
+	vertical-align: super;
+	position: relative;
+}
+sub {
+    vertical-align: sub;
+    top: -1px;
+}
+
+@media print {
+    body {
+        background:#fff;
+    }
+    img, pre, blockquote, table, figure {
+        page-break-inside: avoid
+    }
+    .footnotes { page-break-before: always }
+    #wrapper {
+        background: #fff;
+        border:none;
+    }
+    code {
+        background-color: #fff;
+        color: #444!important;
+        padding: 0 .2em;
+        border: 1px solid #DEDEDE;
+    }
+    pre code {
+        background-color: #fff!important;
+        overflow:visible;
+    }
+    pre {
+        background: #fff;
+    }
+}
+</style>
+
+</head>
+<body class="normal">
+  <div id="wrapper">
+      <ul>
+<li><p>2012&#8211;01&#8211;09 Ruben Fonseca <a href="&#x6d;&#x61;&#x69;&#108;&#116;&#111;&#58;&#102;&#x6f;&#x6e;&#115;&#x65;&#107;&#97;&#x40;&#x67;&#x6d;&#x61;&#105;&#108;&#x2e;&#x63;&#x6f;&#x6d;">&#102;&#x6f;&#x6e;&#115;&#101;&#x6b;&#x61;&#64;&#103;&#x6d;&#97;&#x69;&#x6c;&#x2e;&#x63;&#x6f;&#x6d;</a></p>
+
+<ul>
+<li><p>version 1.5 released</p></li>
+<li><p>no code changes, just better documentation</p></li>
+</ul></li>
+<li><p>2011&#8211;12&#8211;05 Ruben Fonseca <a href="&#109;&#x61;&#105;&#x6c;&#x74;&#111;&#x3a;&#102;&#x6f;&#x6e;&#x73;&#101;&#107;&#97;&#64;&#103;&#109;&#97;&#x69;&#108;&#46;&#x63;&#111;&#x6d;">&#x66;&#x6f;&#110;&#115;&#x65;&#107;&#x61;&#x40;&#x67;&#x6d;&#97;&#x69;&#108;&#x2e;&#x63;&#x6f;&#109;</a></p>
+
+<ul>
+<li><p>version 1.4 released</p></li>
+<li><p>fixed a bug on loadMetadata when there we nested directiories</p></li>
+</ul></li>
+<li><p>2011&#8211;11&#8211;06 Ruben Fonseca <a href="&#x6d;&#x61;&#x69;&#x6c;&#x74;&#111;&#x3a;&#102;&#111;&#x6e;&#x73;&#101;&#107;&#97;&#64;&#x67;&#109;&#97;&#x69;&#x6c;&#x2e;&#99;&#x6f;&#109;">&#x66;&#x6f;&#110;&#115;&#x65;&#x6b;&#x61;&#x40;&#x67;&#109;&#97;&#x69;&#108;&#46;&#99;&#x6f;&#109;</a></p>
+
+<ul>
+<li><p>version 1.2 released</p></li>
+<li><p>make the Changelog available on the documentation</p></li>
+</ul></li>
+<li><p>2011&#8211;11&#8211;03 Ruben Fonseca <a href="&#109;&#x61;&#105;&#x6c;&#116;&#111;&#58;&#102;&#x6f;&#110;&#115;&#x65;&#x6b;&#x61;&#64;&#x67;&#x6d;&#97;&#x69;&#108;&#x2e;&#99;&#111;&#109;">&#x66;&#x6f;&#110;&#115;&#101;&#x6b;&#x61;&#64;&#x67;&#x6d;&#97;&#x69;&#108;&#x2e;&#99;&#x6f;&#109;</a></p>
+
+<ul>
+<li><p>version 1.1 released</p></li>
+<li><p>added option to overwrite file when using the uploadFile method</p></li>
+<li><p>when a file is successfully uploaded, the new metadata is now
+ returned on the success callback</p></li>
+</ul></li>
+<li><p>2011&#8211;10&#8211;26 Ruben Fonseca <a href="&#109;&#97;&#105;&#108;&#116;&#111;&#58;&#102;&#x6f;&#110;&#115;&#101;&#107;&#x61;&#x40;&#x67;&#x6d;&#x61;&#105;&#x6c;&#x2e;&#x63;&#111;&#x6d;">&#x66;&#111;&#110;&#115;&#x65;&#x6b;&#x61;&#64;&#103;&#x6d;&#x61;&#105;&#108;&#x2e;&#99;&#111;&#109;</a></p>
+
+<ul>
+<li><p>version 1.0 released, based on the official Dropbox SDK 1.0</p></li>
+<li><p>THIS IS A NEW GENERATION OF THE MODULE!!!! PLEASE DON&#8217;T UPGRADE UNLESS
+ YOU READ AND UNDERSTAND THE documentation/index.html FILE!</p></li>
+<li><p>There are no major changes on the API, but the steps necessary to make
+ the app work are VERY VERY VERY DIFFERENT!</p></li>
+</ul></li>
+<li><p>2011&#8211;10&#8211;24 Ruben Fonseca <a href="&#x6d;&#x61;&#x69;&#x6c;&#x74;&#x6f;&#x3a;&#x66;&#111;&#110;&#x73;&#101;&#x6b;&#x61;&#x40;&#x67;&#109;&#x61;&#105;&#x6c;&#x2e;&#99;&#x6f;&#109;">&#x66;&#111;&#110;&#115;&#101;&#x6b;&#x61;&#x40;&#x67;&#x6d;&#x61;&#105;&#x6c;&#x2e;&#99;&#x6f;&#109;</a></p>
+
+<ul>
+<li><p>version 0.7 released</p></li>
+<li><p>fixes a bug where it&#8217;s not possible to dismiss the Login window
+ on the new iOS 5 devices. Aparently, iOS 5 the API of accessing
+ the parent window.</p></li>
+</ul></li>
+</ul>
+
+    </div>
+</body>
+</html>

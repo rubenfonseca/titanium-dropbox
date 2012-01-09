@@ -1,0 +1,399 @@
+<!DOCTYPE html>  
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+  <title>client</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <style>
+/* 
+   This document has been created with Marked.app <http://markedapp.com>, Copyright 2011 Brett Terpstra
+   Please leave this notice in place, along with any additional credits below.
+   ---------------------------------------------------------------
+   Some simple Github-like styles, with syntax highlighting CSS via Pygments (requires custom processor).
+   via https://github.com/alampros/Docter
+*/
+html {
+	margin:0;
+	padding:1em;
+}
+body{
+    -webkit-font-smoothing: antialiased;
+	font: 13.34px helvetica,arial,freesans,clean,sans-serif;
+	line-height: 1.4em;
+	color: #333;
+	border: none;
+	line-height: 1.5;
+	margin: 0 auto;
+    max-width: 900px; 
+	text-align:left;
+	color:black;
+    background:#fff;
+}
+
+img {max-width:100%}
+
+@media screen {
+    #wrapper { padding:9px; background:#F8F8F8;	border:1px solid #E9E9E9;}    
+    body.inverted, .inverted #wrapper {
+        color: #eee;
+        background:#333;
+        border-color:#555
+    }
+    .inverted h2 {
+        border-color:#555
+    }
+}
+h1 {
+	font-size: 170%;
+	border-top: 4px solid #aaa;
+	padding-top: .5em;
+	margin-top: 1.5em;
+}
+
+h1:first-child {
+	margin-top: 0 !important;
+	padding-top: .25em !important;
+	border-top: none !important;
+}
+
+h2 {
+	font-size: 150%;
+	margin-top: 1.5em;
+	border-top: 4px solid #e0e0e0;
+	padding-top: .5em;
+}
+
+h3 {
+	margin-top: 1em;
+}
+
+p {
+	margin: 1em 0!important;
+	line-height: 1.5em!important;
+}
+
+pre, code {
+    font: 12px 'Bitstream Vera Sans Mono','Courier',monospace;
+}
+pre {
+    -webkit-box-shadow: rgba(0, 0, 0, 0.0664062) 0px 1px 2px 0px inset;
+    background-color: #EEE;
+    border: #ddd 1px solid;
+    color: #444;
+    display: block;
+    margin: 12px 0;
+    overflow: auto;
+    padding: 5px;
+    white-space: pre;
+    max-width:100%;
+    overflow:auto;
+}
+code {
+    background-color: ghostWhite;
+    color: #444!important;
+    padding: 0 .2em;
+    border: 1px solid #DEDEDE;
+}
+pre code {
+    padding: 0!important;
+    font-size: 12px!important;
+    background-color: #EEE!important;
+    border: none!important;
+    overflow:visible;
+}
+a, a code {
+	color: #4183C4;
+	text-decoration:none;
+}
+
+table td {
+	border-bottom: 1px solid #DDD!important;
+	padding: .2em 1em!important;
+}
+
+.shadow{
+	-webkit-box-shadow:0 5px 15px #000;
+	-moz-box-shadow:0 5px 15px #000;
+	box-shadow:0 5px 15px #000;		
+}
+
+
+.c{color:#998;font-style:italic;}
+.err{color:#a61717;background-color:#e3d2d2;}
+.k{font-weight:bold;}
+.o{font-weight:bold;}
+.cm{color:#998;font-style:italic;}
+.cp{color:#999;font-weight:bold;}
+.c1{color:#998;font-style:italic;}
+.cs{color:#999;font-weight:bold;font-style:italic;}
+.gd{color:#000;background-color:#fdd;}
+.gd .x{color:#000;background-color:#faa;}
+.ge{font-style:italic;}
+.gr{color:#a00;}
+.gh{color:#999;}
+.gi{color:#000;background-color:#dfd;}
+.gi .x{color:#000;background-color:#afa;}
+.go{color:#888;}
+.gp{color:#555;}
+.gs{font-weight:bold;}
+.gu{color:#800080;font-weight:bold;}
+.gt{color:#a00;}
+.kc{font-weight:bold;}
+.kd{font-weight:bold;}
+.kn{font-weight:bold;}
+.kp{font-weight:bold;}
+.kr{font-weight:bold;}
+.kt{color:#458;font-weight:bold;}
+.m{color:#099;}
+.s{color:#d14;}
+.na{color:#008080;}
+.nb{color:#0086B3;}
+.nc{color:#458;font-weight:bold;}
+.no{color:#008080;}
+.ni{color:#800080;}
+.ne{color:#900;font-weight:bold;}
+.nf{color:#900;font-weight:bold;}
+.nn{color:#555;}
+.nt{color:#000080;}
+.nv{color:#008080;}
+.ow{font-weight:bold;}
+.w{color:#bbb;}
+.mf{color:#099;}
+.mh{color:#099;}
+.mi{color:#099;}
+.mo{color:#099;}
+.sb{color:#d14;}
+.sc{color:#d14;}
+.sd{color:#d14;}
+.s2{color:#d14;}
+.se{color:#d14;}
+.sh{color:#d14;}
+.si{color:#d14;}
+.sx{color:#d14;}
+.sr{color:#009926;}
+.s1{color:#d14;}
+.ss{color:#990073;}
+.bp{color:#999;}
+.vc{color:#008080;}
+.vg{color:#008080;}
+.vi{color:#008080;}
+.il{color:#099;}
+
+.poetry pre {
+    font-family:Georgia, Garamond, serif !important;
+    font-style:italic;
+    font-size:110% !important;
+    line-height:1.6em;
+    display:block;
+    margin-left:1em;
+}
+
+.poetry pre code {
+    font-family:Georgia, Garamond, serif !important;
+}
+
+sup,sub,a.footnote {
+	font-size: 1.4ex;
+	height: 0;
+	line-height: 1;
+	vertical-align: super;
+	position: relative;
+}
+sub {
+    vertical-align: sub;
+    top: -1px;
+}
+
+@media print {
+    body {
+        background:#fff;
+    }
+    img, pre, blockquote, table, figure {
+        page-break-inside: avoid
+    }
+    .footnotes { page-break-before: always }
+    #wrapper {
+        background: #fff;
+        border:none;
+    }
+    code {
+        background-color: #fff;
+        color: #444!important;
+        padding: 0 .2em;
+        border: 1px solid #DEDEDE;
+    }
+    pre code {
+        background-color: #fff!important;
+        overflow:visible;
+    }
+    pre {
+        background: #fff;
+    }
+}
+</style>
+
+</head>
+<body class="normal">
+  <div id="wrapper">
+      <h1 id="com.0x82.dropbox.client">com.0x82.dropbox.Client</h1>
+
+<h2 id="description">Description</h2>
+
+<p>A dropbox object that represents a dropbox client with the server.</p>
+
+<h2 id="reference">Reference</h2>
+
+<p>All callbacks are optional. You implement them if you want to.</p>
+
+<h3 id="dropbox.client.loadaccountinfo">dropbox.client.loadAccountInfo({&#8230;})</h3>
+
+<p>Gets the current account information and passes it to the success callback. It accepts a dictionary with the following options:</p>
+
+<ul>
+<li><p>success[callback]: a function with a dictionary event with the following properties:</p>
+
+<blockquote>
+<p>country[string]<br />
+displayName[string]<br />
+userId[string]<br />
+referralLink[string]<br />
+quota[object]<br /></p>
+
+<blockquote>
+<p>normal[long]<br />
+shared[long]<br />
+quota[long]<br /></p>
+</blockquote>
+</blockquote></li>
+<li><p>error[callback]: called if the method returns an error</p></li>
+</ul>
+
+<h3 id="dropbox.client.loadmetadata">dropbox.client.loadMetadata({&#8230;})</h3>
+
+<p>Gets the metadata for a file. It accepts a dictionary with the following options:</p>
+
+<ul>
+<li>path[string]: the path you want to get metadata<br /></li>
+<li>hash[string]: OPTIONAL. if you are making sucessive requests on the same
+ path, you should use the event.hash returned on the success callback. this in
+ turn will make the server fire the &#8216;unchanged&#8217; callback if the metadata did
+ not change</li>
+<li><p>success[callback]: the event object has the following
+ properties</p>
+
+<blockquote>
+<p>hash[string]<br />
+thumbnailExists[bool]<br />
+totalBytes[long]<br />
+lastModifiedDate[date]<br />
+path[string]<br />
+isDirectory[bool]<br />
+hash[string]<br />
+humanReadableSize[string]<br />
+root[string]<br />
+icon[string]<br />
+revision[long]<br />
+isDeleted[bool]<br />
+contents[object]: an array of metadata for the directory<br /></p>
+</blockquote></li>
+<li>unchanged[callback]: called if you supply a hash parameter and the metadata didn&#8217;t change at that path</li>
+<li>error[callback]: called if the method returns an error (does the path exists?)</li>
+</ul>
+
+<h3 id="dropbox.client.loadthumbnail">dropbox.client.loadThumbnail({&#8230;})</h3>
+
+<p>Tries to get a thumbnail for the path. It accepts a dictionary with the following options:</p>
+
+<ul>
+<li><p>path[string]: the path you want to get the thumbnail<br /></p></li>
+<li><p>size[string]: OPTIONAL specify the image size. Default = &#8216;small&#8217;<br /></p></li>
+<li><p>success[callback]: the thumbnail blob will come on the &#8216;thumbnail&#8217; property
+ on the event. You can assign it to a ImageView like this:</p>
+
+<p>var imageView = Ti.UI.createImageView({image:e.thumbnail});</p></li>
+<li><p>error[callback]: called if the method returns an error</p></li>
+</ul>
+
+<p><em>CAUTION</em>: the size <code>iphone_best</code> does not exist anymore, so it can&#8217;t be used.</p>
+
+<h3 id="dropbox.client.getfile">dropbox.client.getFile({&#8230;})</h3>
+
+<p>Tries to get the file from a path. It accepts a dictionary with the following options:</p>
+
+<ul>
+<li><p>path[string]: the path from the file you want to get<br /></p></li>
+<li><p>success[callback]: the file blob will come on the &#8216;file&#8217; property on the
+ event. You can assign it to a ImageView like this:</p>
+
+<p>var imageView = Ti.UI.createImageView({image:e.file});</p></li>
+<li><p>error[callback]: called if the method returns an error</p></li>
+</ul>
+
+<h3 id="dropbox.client.cancelfileloadpath">dropbox.client.cancelFileLoad(path)</h3>
+
+<p>Cancels the download of the file at the given path.</p>
+
+<h3 id="dropbox.client.createfolder">dropbox.client.createFolder({&#8230;})</h3>
+
+<p>Tries to create a new directory. It accepts a dictionary with the following options:</p>
+
+<ul>
+<li>path[string]: the path to the new directory<br /></li>
+<li>success[callback]: called if the operation succeeded<br /></li>
+<li>error[callback]: called if the operation failed (does the path already exists?)</li>
+</ul>
+
+<h3 id="dropbox.client.deletepath">dropbox.client.deletePath({&#8230;})</h3>
+
+<p>Deletes a path from Dropbox. It accepts a dictionary with the following options:</p>
+
+<ul>
+<li>path[string]: the path to delete<br /></li>
+<li>success[callback]: called if the operation succeeded<br /></li>
+<li>error[callback]: called if the operation failed (does the path exists?)</li>
+</ul>
+
+<h3 id="dropbox.client.uploadfile">dropbox.client.uploadFile({&#8230;})</h3>
+
+<p>Uploads a new file to Dropbox. It accepts a dictionary with the following options:</p>
+
+<ul>
+<li>path[string]: the path where the file will be uplaoded<br /></li>
+<li>file[string]: the path of the file you want to upload<br /></li>
+<li>parentRev[string]: [optional] the previous revision of the file. This value can be obtained
+ using the .getMetadata method, under the key <code>rev</code></li>
+<li>overwrite[boolean]: [optional] if <code>true</code>, the upload doesn&#8217;t create a new file
+ if the target path already exists. The default value is <code>false</code>, so if the
+ target file already exists, a new file is created, and never overwritten.</li>
+<li>success[callback]: called if the upload succeeds<br /></li>
+<li>error[callback]: called if the upload fails<br /></li>
+<li>progress[callback]: called during the upload. It has a &#8216;progress&#8217; event
+ property with the progress of the upload, ranging from 0 to 1</li>
+</ul>
+
+<h3 id="dropbox.client.copypath">dropbox.client.copyPath({&#8230;})</h3>
+
+<p>Copies a path on Dropbox. It accepts a dictionary with the following options:</p>
+
+<ul>
+<li>fromPath[string]: the origin path<br /></li>
+<li>toPath[string]: the destination path<br /></li>
+<li>success[callback]: called when it&#8217;s done<br /></li>
+<li>error[callback]: called if there&#8217;s an error</li>
+</ul>
+
+<h3 id="dropbox.client.movepath">dropbox.client.movePath({&#8230;})</h3>
+
+<p>Moves a path on Dropbox. It accepts a dictionary with the following options:</p>
+
+<ul>
+<li>fromPath[string]: the origin path<br /></li>
+<li>toPath[string]: the destination path<br /></li>
+<li>success[callback]: called when it&#8217;s done<br /></li>
+<li>error[callback]: called if there&#8217;s an error</li>
+</ul>
+
+    </div>
+</body>
+</html>
