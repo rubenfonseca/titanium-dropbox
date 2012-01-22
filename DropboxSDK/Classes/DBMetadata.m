@@ -7,7 +7,6 @@
 //
 
 #import "DBMetadata.h"
-#import "TiUtils.h"
 
 @implementation DBMetadata
 

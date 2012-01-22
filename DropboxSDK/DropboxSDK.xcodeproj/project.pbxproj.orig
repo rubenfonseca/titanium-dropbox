@@ -58,9 +58,9 @@
 		D387589714135C3E0013E17C /* NSObject+DBJSON.m in Sources */ = {isa = PBXBuildFile; fileRef = D387584814135C3E0013E17C /* NSObject+DBJSON.m */; };
 		D387589814135C3E0013E17C /* NSString+DBJSON.m in Sources */ = {isa = PBXBuildFile; fileRef = D387584914135C3E0013E17C /* NSString+DBJSON.m */; };
 		D387589914135C3E0013E17C /* DBJSON.m in Sources */ = {isa = PBXBuildFile; fileRef = D387584A14135C3E0013E17C /* DBJSON.m */; };
-		D387589A14135C3E0013E17C /* DBJsonBase.m in Sources */ = {isa = PBXBuildFile; fileRef = D387584B14135C3E0013E17C /* DBJsonBase.m */; };
-		D387589B14135C3E0013E17C /* DBJsonParser.m in Sources */ = {isa = PBXBuildFile; fileRef = D387584C14135C3E0013E17C /* DBJsonParser.m */; };
-		D387589C14135C3E0013E17C /* DBJsonWriter.m in Sources */ = {isa = PBXBuildFile; fileRef = D387584D14135C3E0013E17C /* DBJsonWriter.m */; };
+		D387589A14135C3E0013E17C /* SBJsonBase.m in Sources */ = {isa = PBXBuildFile; fileRef = D387584B14135C3E0013E17C /* SBJsonBase.m */; };
+		D387589B14135C3E0013E17C /* SBJsonParser.m in Sources */ = {isa = PBXBuildFile; fileRef = D387584C14135C3E0013E17C /* SBJsonParser.m */; };
+		D387589C14135C3E0013E17C /* SBJsonWriter.m in Sources */ = {isa = PBXBuildFile; fileRef = D387584D14135C3E0013E17C /* SBJsonWriter.m */; };
 		D387589D14135C3E0013E17C /* Base64Transcoder.c in Sources */ = {isa = PBXBuildFile; fileRef = D387585014135C3E0013E17C /* Base64Transcoder.c */; };
 		D387589E14135C3E0013E17C /* MPOAuthAPI.m in Sources */ = {isa = PBXBuildFile; fileRef = D387585114135C3E0013E17C /* MPOAuthAPI.m */; };
 		D387589F14135C3E0013E17C /* MPOAuthAPIRequestLoader.m in Sources */ = {isa = PBXBuildFile; fileRef = D387585214135C3E0013E17C /* MPOAuthAPIRequestLoader.m */; };
@@ -92,9 +92,9 @@
 		D3933C0E145F145E00E15FA7 /* NSObject+DBJSON.m in Sources */ = {isa = PBXBuildFile; fileRef = D387584814135C3E0013E17C /* NSObject+DBJSON.m */; };
 		D3933C0F145F145E00E15FA7 /* NSString+DBJSON.m in Sources */ = {isa = PBXBuildFile; fileRef = D387584914135C3E0013E17C /* NSString+DBJSON.m */; };
 		D3933C10145F145E00E15FA7 /* DBJSON.m in Sources */ = {isa = PBXBuildFile; fileRef = D387584A14135C3E0013E17C /* DBJSON.m */; };
-		D3933C11145F145E00E15FA7 /* DBJsonBase.m in Sources */ = {isa = PBXBuildFile; fileRef = D387584B14135C3E0013E17C /* DBJsonBase.m */; };
-		D3933C12145F145E00E15FA7 /* DBJsonParser.m in Sources */ = {isa = PBXBuildFile; fileRef = D387584C14135C3E0013E17C /* DBJsonParser.m */; };
-		D3933C13145F145E00E15FA7 /* DBJsonWriter.m in Sources */ = {isa = PBXBuildFile; fileRef = D387584D14135C3E0013E17C /* DBJsonWriter.m */; };
+		D3933C11145F145E00E15FA7 /* SBJsonBase.m in Sources */ = {isa = PBXBuildFile; fileRef = D387584B14135C3E0013E17C /* SBJsonBase.m */; };
+		D3933C12145F145E00E15FA7 /* SBJsonParser.m in Sources */ = {isa = PBXBuildFile; fileRef = D387584C14135C3E0013E17C /* SBJsonParser.m */; };
+		D3933C13145F145E00E15FA7 /* SBJsonWriter.m in Sources */ = {isa = PBXBuildFile; fileRef = D387584D14135C3E0013E17C /* SBJsonWriter.m */; };
 		D3933C14145F145E00E15FA7 /* Base64Transcoder.c in Sources */ = {isa = PBXBuildFile; fileRef = D387585014135C3E0013E17C /* Base64Transcoder.c */; };
 		D3933C15145F145E00E15FA7 /* MPOAuthAPI.m in Sources */ = {isa = PBXBuildFile; fileRef = D387585114135C3E0013E17C /* MPOAuthAPI.m */; };
 		D3933C16145F145E00E15FA7 /* MPOAuthAPIRequestLoader.m in Sources */ = {isa = PBXBuildFile; fileRef = D387585214135C3E0013E17C /* MPOAuthAPIRequestLoader.m */; };
@@ -172,9 +172,9 @@
 		D387584814135C3E0013E17C /* NSObject+DBJSON.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "NSObject+DBJSON.m"; sourceTree = "<group>"; };
 		D387584914135C3E0013E17C /* NSString+DBJSON.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "NSString+DBJSON.m"; sourceTree = "<group>"; };
 		D387584A14135C3E0013E17C /* DBJSON.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = DBJSON.m; sourceTree = "<group>"; };
-		D387584B14135C3E0013E17C /* DBJsonBase.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = DBJsonBase.m; sourceTree = "<group>"; };
-		D387584C14135C3E0013E17C /* DBJsonParser.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = DBJsonParser.m; sourceTree = "<group>"; };
-		D387584D14135C3E0013E17C /* DBJsonWriter.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = DBJsonWriter.m; sourceTree = "<group>"; };
+		D387584B14135C3E0013E17C /* SBJsonBase.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SBJsonBase.m; sourceTree = "<group>"; };
+		D387584C14135C3E0013E17C /* SBJsonParser.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SBJsonParser.m; sourceTree = "<group>"; };
+		D387584D14135C3E0013E17C /* SBJsonWriter.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SBJsonWriter.m; sourceTree = "<group>"; };
 		D387585014135C3E0013E17C /* Base64Transcoder.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; path = Base64Transcoder.c; sourceTree = "<group>"; };
 		D387585114135C3E0013E17C /* MPOAuthAPI.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MPOAuthAPI.m; sourceTree = "<group>"; };
 		D387585214135C3E0013E17C /* MPOAuthAPIRequestLoader.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MPOAuthAPIRequestLoader.m; sourceTree = "<group>"; };
@@ -323,9 +323,9 @@
 				D387584814135C3E0013E17C /* NSObject+DBJSON.m */,
 				D387584914135C3E0013E17C /* NSString+DBJSON.m */,
 				D387584A14135C3E0013E17C /* DBJSON.m */,
-				D387584B14135C3E0013E17C /* DBJsonBase.m */,
-				D387584C14135C3E0013E17C /* DBJsonParser.m */,
-				D387584D14135C3E0013E17C /* DBJsonWriter.m */,
+				D387584B14135C3E0013E17C /* SBJsonBase.m */,
+				D387584C14135C3E0013E17C /* SBJsonParser.m */,
+				D387584D14135C3E0013E17C /* SBJsonWriter.m */,
 			);
 			path = JSON;
 			sourceTree = "<group>";
@@ -512,9 +512,9 @@
 				D387589714135C3E0013E17C /* NSObject+DBJSON.m in Sources */,
 				D387589814135C3E0013E17C /* NSString+DBJSON.m in Sources */,
 				D387589914135C3E0013E17C /* DBJSON.m in Sources */,
-				D387589A14135C3E0013E17C /* DBJsonBase.m in Sources */,
-				D387589B14135C3E0013E17C /* DBJsonParser.m in Sources */,
-				D387589C14135C3E0013E17C /* DBJsonWriter.m in Sources */,
+				D387589A14135C3E0013E17C /* SBJsonBase.m in Sources */,
+				D387589B14135C3E0013E17C /* SBJsonParser.m in Sources */,
+				D387589C14135C3E0013E17C /* SBJsonWriter.m in Sources */,
 				D387589D14135C3E0013E17C /* Base64Transcoder.c in Sources */,
 				D387589E14135C3E0013E17C /* MPOAuthAPI.m in Sources */,
 				D387589F14135C3E0013E17C /* MPOAuthAPIRequestLoader.m in Sources */,
@@ -552,9 +552,9 @@
 				D3933C0E145F145E00E15FA7 /* NSObject+DBJSON.m in Sources */,
 				D3933C0F145F145E00E15FA7 /* NSString+DBJSON.m in Sources */,
 				D3933C10145F145E00E15FA7 /* DBJSON.m in Sources */,
-				D3933C11145F145E00E15FA7 /* DBJsonBase.m in Sources */,
-				D3933C12145F145E00E15FA7 /* DBJsonParser.m in Sources */,
-				D3933C13145F145E00E15FA7 /* DBJsonWriter.m in Sources */,
+				D3933C11145F145E00E15FA7 /* SBJsonBase.m in Sources */,
+				D3933C12145F145E00E15FA7 /* SBJsonParser.m in Sources */,
+				D3933C13145F145E00E15FA7 /* SBJsonWriter.m in Sources */,
 				D3933C14145F145E00E15FA7 /* Base64Transcoder.c in Sources */,
 				D3933C15145F145E00E15FA7 /* MPOAuthAPI.m in Sources */,
 				D3933C16145F145E00E15FA7 /* MPOAuthAPIRequestLoader.m in Sources */,
@@ -584,7 +584,6 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				ARCHS = (
-					i386,
 					armv7,
 					armv6,
 				);
@@ -602,7 +601,6 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				ARCHS = (
-					i386,
 					armv7,
 					armv6,
 				);
