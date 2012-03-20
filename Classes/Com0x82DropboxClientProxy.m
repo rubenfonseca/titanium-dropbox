@@ -58,6 +58,15 @@
   
   RELEASE_TO_NIL(movePathSuccessCallback);
   RELEASE_TO_NIL(movePathErrorCallback);
+	
+	RELEASE_TO_NIL(sharePathSuccessCallback);
+	RELEASE_TO_NIL(sharePathErroCallback);
+	
+	RELEASE_TO_NIL(mediaPathSuccessCallback);
+	RELEASE_TO_NIL(mediaPathErrorCallback);
+	
+	RELEASE_TO_NIL(searchSuccesCallback);
+	RELEASE_TO_NIL(searchErrorCallback);
   
   [super dealloc];
 }
@@ -302,6 +311,107 @@
   
   if(deletePathErrorCallback)
     [self _fireEventToListener:@"error" withObject:event listener:deletePathErrorCallback thisObject:nil];
+}
+
+-(void)sharePath:(id)args {
+	ENSURE_UI_THREAD_1_ARG(args);
+	ENSURE_SINGLE_ARG(args, NSDictionary);
+	
+	id success = [args objectForKey:@"success"];
+	id error   = [args objectForKey:@"error"];
+	
+	RELEASE_AND_REPLACE(sharePathSuccessCallback, success);
+	RELEASE_AND_REPLACE(sharePathErroCallback, error);
+	
+	id path = [args objectForKey:@"path"];
+	ENSURE_TYPE(path, NSString);
+	
+	[self.restClient loadSharableLinkForFile:path];
+}
+
+-(void)restClient:(DBRestClient *)restClient loadedSharableLink:(NSString *)link forFile:(NSString *)path {
+	NSDictionary *event = [NSDictionary dictionaryWithObjectsAndKeys:path, @"path", link, @"url", nil];
+	
+	if(sharePathSuccessCallback)
+		[self _fireEventToListener:@"success" withObject:event listener:sharePathSuccessCallback thisObject:nil];
+}
+
+-(void)restClient:(DBRestClient *)restClient loadSharableLinkFailedWithError:(NSError *)error {
+	NSDictionary *event = error.userInfo;
+	
+	if(sharePathErroCallback)
+		[self _fireEventToListener:@"error" withObject:event listener:sharePathErroCallback thisObject:nil];
+}
+
+-(void)getStreamableURL:(id)args {
+	ENSURE_UI_THREAD_1_ARG(args);
+	ENSURE_SINGLE_ARG(args, NSDictionary);
+	
+	id success = [args objectForKey:@"success"];
+	id error   = [args objectForKey:@"error"];
+	
+	RELEASE_AND_REPLACE(mediaPathSuccessCallback, success);
+	RELEASE_AND_REPLACE(mediaPathErrorCallback, error);
+	
+	id path = [args objectForKey:@"path"];
+	ENSURE_TYPE(path, NSString);
+	
+	[self.restClient loadStreamableURLForFile:path];
+}
+
+-(void)restClient:(DBRestClient *)restClient loadedStreamableURL:(NSURL *)url forFile:(NSString *)path {
+	NSDictionary *event = [NSDictionary dictionaryWithObjectsAndKeys:path, @"path", [url absoluteString], @"url", nil];
+	
+	if(mediaPathSuccessCallback)
+		[self _fireEventToListener:@"success" withObject:event listener:mediaPathSuccessCallback thisObject:nil];
+}
+
+-(void)restClient:(DBRestClient *)restClient loadStreamableURLFailedWithError:(NSError *)error {
+	NSDictionary *event = error.userInfo;
+	
+	if(mediaPathErrorCallback)
+		[self _fireEventToListener:@"error" withObject:event listener:mediaPathErrorCallback thisObject:nil];
+}
+
+-(void)search:(id)args {
+	ENSURE_UI_THREAD_1_ARG(args);
+	ENSURE_SINGLE_ARG(args, NSDictionary);
+	
+	id success = [args objectForKey:@"success"];
+	id error   = [args objectForKey:@"error"];
+	
+	RELEASE_AND_REPLACE(searchSuccesCallback, success);
+	RELEASE_AND_REPLACE(searchErrorCallback, error);
+	
+	id path = [args objectForKey:@"path"];
+	id query = [args objectForKey:@"query"];
+	
+	ENSURE_TYPE(path, NSString);
+	ENSURE_TYPE(query, NSString);
+	
+	[self.restClient searchPath:path forKeyword:query];
+}
+
+-(void)restClient:(DBRestClient *)restClient loadedSearchResults:(NSArray *)results forPath:(NSString *)path keyword:(NSString *)keyword {
+	
+	NSMutableArray *metadatas = [NSMutableArray arrayWithCapacity:[results count]];
+	for(DBMetadata *metadata in results) {
+		NSMutableDictionary *dict = [NSMutableDictionary dictionary];
+		[metadata dumpToDictionary:dict];
+		[metadatas addObject:dict];
+	}
+	
+	NSDictionary *event = [NSDictionary dictionaryWithObjectsAndKeys:path, @"path", keyword, @"keyword", metadatas, @"results", nil];
+	
+	if(searchSuccesCallback)
+		[self _fireEventToListener:@"success" withObject:event listener:searchSuccesCallback thisObject:nil];
+}
+
+-(void)restClient:(DBRestClient *)restClient searchFailedWithError:(NSError *)error {
+	NSDictionary *event = error.userInfo;
+	
+	if(searchErrorCallback)
+		[self _fireEventToListener:@"error" withObject:event listener:searchErrorCallback thisObject:nil];
 }
 
 #define kUploadFileSuccessCallback @"UploadFileSuccessCallback"

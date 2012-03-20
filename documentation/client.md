@@ -132,3 +132,31 @@ Moves a path on Dropbox. It accepts a dictionary with the following options:
 - success[callback]: called when it's done<br />
 - error[callback]: called if there's an error
 
+### dropbox.client.sharePath({...})
+
+Generates an URL link for sharing the specified directory or file. It accepts a dictionary:
+
+- path[string]: the Dropbox path to share
+- success[callback]: called if the url is retrieved. It contains one key:
+> - url: the URL to share the path
+- error[callback]: called if the url can't be retrieved
+
+### dropbox.client.getStreamableURL({...})
+
+Generates an URL link for directly sharing a file, without touching the Dropbox frontend. Usefull
+for using the link into an imageview or a video player. It accepts a dictionary:
+
+- path[string]: the Dropbox path to share
+- success[callback]: called if the url is retrieved. It contains one key:
+> - url: the direct URL to the shared path
+- error[callback]: called if the url can't be retrived
+
+### dropbox.client.searchPath({...})
+
+Searches a directory for entries matching the query. It accepts a dictionary:
+
+- path[string]: the Dropbox directory to search in.
+- query[string]: the query to search for (minimum 3 charatcters).
+- success[callback]: called with the search results on the `results` key
+- error[callback]: called if the search fails
+

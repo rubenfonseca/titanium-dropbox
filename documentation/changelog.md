@@ -1,3 +1,11 @@
+- 2012-01-23 Ruben Fonseca <fonseka@gmail.com>
+
+    * version 1.6 released
+
+    * added searchPath, sharePath, getStreamableURL
+      see the new documentation on the clientproxy, and the new items on the
+      example/app.js file
+
 - 2012-01-09 Ruben Fonseca <fonseka@gmail.com>
   
     * version 1.5 released

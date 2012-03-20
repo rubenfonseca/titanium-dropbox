@@ -37,6 +37,15 @@
   
   KrollCallback *movePathSuccessCallback;
   KrollCallback *movePathErrorCallback;
+	
+	KrollCallback *sharePathSuccessCallback;
+	KrollCallback *sharePathErroCallback;
+	
+	KrollCallback *mediaPathSuccessCallback;
+	KrollCallback *mediaPathErrorCallback;
+	
+	KrollCallback *searchSuccesCallback;
+	KrollCallback *searchErrorCallback;
 }
 
 -(void)loadAccountInfo:(id)args;

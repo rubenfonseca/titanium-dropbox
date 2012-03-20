@@ -43,6 +43,10 @@ img {max-width:100%}
     .inverted h2 {
         border-color:#555
     }
+    .inverted hr {
+        border-color: #777;
+        border-width: 1px !important;
+    }
 }
 h1 {
 	font-size: 170%;
@@ -392,6 +396,50 @@ contents[object]: an array of metadata for the directory<br /></p>
 <li>toPath[string]: the destination path<br /></li>
 <li>success[callback]: called when it&#8217;s done<br /></li>
 <li>error[callback]: called if there&#8217;s an error</li>
+</ul>
+
+<h3 id="dropbox.client.sharepath">dropbox.client.sharePath({&#8230;})</h3>
+
+<p>Generates an URL link for sharing the specified directory or file. It accepts a dictionary:</p>
+
+<ul>
+<li>path[string]: the Dropbox path to share</li>
+<li><p>success[callback]: called if the url is retrieved. It contains one key:</p>
+
+<blockquote>
+<ul>
+<li>url: the URL to share the path</li>
+</ul>
+</blockquote></li>
+<li>error[callback]: called if the url can&#8217;t be retrieved</li>
+</ul>
+
+<h3 id="dropbox.client.getstreamableurl">dropbox.client.getStreamableURL({&#8230;})</h3>
+
+<p>Generates an URL link for directly sharing a file, without touching the Dropbox frontend. Usefull
+for using the link into an imageview or a video player. It accepts a dictionary:</p>
+
+<ul>
+<li>path[string]: the Dropbox path to share</li>
+<li><p>success[callback]: called if the url is retrieved. It contains one key:</p>
+
+<blockquote>
+<ul>
+<li>url: the direct URL to the shared path</li>
+</ul>
+</blockquote></li>
+<li>error[callback]: called if the url can&#8217;t be retrived</li>
+</ul>
+
+<h3 id="dropbox.client.searchpath">dropbox.client.searchPath({&#8230;})</h3>
+
+<p>Searches a directory for entries matching the query. It accepts a dictionary:</p>
+
+<ul>
+<li>path[string]: the Dropbox directory to search in.</li>
+<li>query[string]: the query to search for (minimum 3 charatcters).</li>
+<li>success[callback]: called with the search results on the <code>results</code> key</li>
+<li>error[callback]: called if the search fails</li>
 </ul>
 
     </div>
