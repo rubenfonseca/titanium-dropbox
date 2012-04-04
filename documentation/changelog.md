@@ -1,3 +1,9 @@
+- 2012-04-04 Ruben Fonseca <fonseka@gmail.com>
+
+    * version 1.7 released
+
+    * fixed some compilation errors on SDK 1.8.2
+
 - 2012-01-23 Ruben Fonseca <fonseka@gmail.com>
 
     * version 1.6 released
