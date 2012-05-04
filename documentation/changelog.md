@@ -1,3 +1,12 @@
+- 2012-05-04 Ruben Fonseca <fonseka@gmail.com>
+
+    * verison 1.8 released
+
+    * VERY IMPORTANT UPDATE: without this version your next version of your app
+      will probably be rejected by App Store, because of rule "11.13"
+
+      More info here: http://tinyurl.com/7ckb659
+
 - 2012-04-04 Ruben Fonseca <fonseka@gmail.com>
 
     * version 1.7 released
