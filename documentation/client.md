@@ -66,7 +66,7 @@ Tries to get a thumbnail for the path. It accepts a dictionary with the followin
 
 *CAUTION*: the size `iphone_best` does not exist anymore, so it can't be used.
 
-### dropbox.client.getFile({...})
+### dropbox.client.loadFile({...})
 
 Tries to get the file from a path. It accepts a dictionary with the following options:
 
@@ -119,9 +119,12 @@ Uploads a new file to Dropbox. It accepts a dictionary with the following option
 Copies a path on Dropbox. It accepts a dictionary with the following options:
 
 - fromPath[string]: the origin path<br />
+- fromCopyRef[string]: the reference obtained from calling createCopyRef()<br />
 - toPath[string]: the destination path<br />
 - success[callback]: called when it's done<br />
 - error[callback]: called if there's an error
+
+*PLEASE NOTE*, you need to specify _one_ of these: fromPath or fromCopyRef
 
 ### dropbox.client.movePath({...})
 
@@ -150,6 +153,16 @@ for using the link into an imageview or a video player. It accepts a dictionary:
 - success[callback]: called if the url is retrieved. It contains one key:
 > - url: the direct URL to the shared path
 - error[callback]: called if the url can't be retrived
+
+### dropbox.client.createCopyRef({...})
+
+Creates and returns a copy_ref to a file. This reference string can be used to
+copy that file to another user's Dropbox. It accepts a dictionary:
+
+- path[string]: the Dropbox path to get the copy_ref
+- success[callback]: called if the API sends a copy_ref. It contains only one key:
+> - copyRef[string]: the copyRef reference you can then use on copyPath.
+- error[callback]: called if the ref can't be obtained
 
 ### dropbox.client.searchPath({...})
 

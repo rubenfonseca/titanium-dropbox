@@ -1,3 +1,23 @@
+- 2012-08-02 Ruben Fonseca <fonseka@gmail.com>
+
+    * version 2.0 released
+
+    * dropped compatibility with older Titanium < 2.0.0 SDKs
+
+    * added `createCopyRef` method to create copy_ref from files
+
+    * added support for copying from copy_ref to the `copyPath` method
+
+    * see the updated documentation and example to see how it works
+
+- 2012-05-23 Ruben Fonseca <fonseka@gmail.com>
+
+    * version 1.9 released
+
+    * upgraded to official Dropbox SDK 1.2.2. Authentication now happens
+      inside an ambedded web view if the Dropbox app is not installed. You
+      don't have to change anything on your code for this to work
+
 - 2012-05-04 Ruben Fonseca <fonseka@gmail.com>
 
     * verison 1.8 released

@@ -120,6 +120,48 @@ function getFile() {
   });
 }
 
+function getCopyRef() {
+  client.createCopyRef({
+    path: '/Photos/P1223189.JPG',
+    success: function(e) {
+      Ti.API.log("COPYREF SUCCESS");
+
+      Ti.API.log(e);
+    },
+    error: function(e) {
+      Ti.API.log("ERROR COPYREF");
+      Ti.API.log(e);
+    }
+  });
+}
+
+function copyRef() {
+  client.createCopyRef({
+    path: '/Photos/P1223189.JPG',
+    success: function(e) {
+      var copyRef = e.copyRef;
+
+      client.copyPath({
+        fromCopyRef: copyRef,
+        toPath: '/Photos/to.jpg',
+        success: function(e) {
+          Ti.API.log("COPY COPYREF SUCCESS");
+          tableview.footerTitle = JSON.stringify(e);
+          alert('Ref Copied');
+        },
+        error: function(e) {
+          Ti.API.log("COPY COPYREF ERROR");
+          Ti.API.log(e);
+        }
+      });
+    },
+    error: function(e) {
+      Ti.API.log("ERROR COPY COPYREF");
+      Ti.API.log(e);
+    }
+  });
+}
+
 function createFolder() {
   client.createFolder({
     path: '/newfolder',
@@ -235,6 +277,8 @@ var data = [
   {title:'Create folder', hasChild:true, callback:createFolder},
   {title:'Delete folder', hasChild:true, callback:deleteFolder},
   {title:'Upload file', hasChild:true, callback:uploadFile},
+  {title:'Get copyref', hasChild:true, callback: getCopyRef},
+  {title:'Copy from copyref', hasChild:true, callback:copyRef},
   {title:'Copy path', hasChild:true, callback: copyPath},
   {title:'Move path', hasChild:true, callback: movePath},
 ];

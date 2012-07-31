@@ -46,6 +46,9 @@
 	
 	KrollCallback *searchSuccesCallback;
 	KrollCallback *searchErrorCallback;
+	
+	KrollCallback *copyRefSuccessCallback;
+	KrollCallback *copyRefErrorCallback;
 }
 
 -(void)loadAccountInfo:(id)args;

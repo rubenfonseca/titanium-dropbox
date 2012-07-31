@@ -35,6 +35,7 @@
 	[super startup];
 	
 	NSLog(@"[INFO] %@ loaded",self);
+	[[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(resumed:) name:@"DropboxDidPostLaunchOptions" object:nil];
 }
 
 -(void)resumed:(id)note {  
@@ -55,9 +56,10 @@
 }
 
 #pragma mark Cleanup 
-
 -(void)dealloc
 {
+	[[NSNotificationCenter defaultCenter] removeObserver:self name:@"DropboxDidPostLaunchOptions" object:nil];
+	
 	// release any resources that have been retained by the module
 	[super dealloc];
 }

@@ -483,6 +483,36 @@
   [callbacks removeObjectForKey:srcPath];
 }
 
+-(void)createCopyRef:(id)args {
+	ENSURE_UI_THREAD_1_ARG(args);
+	ENSURE_SINGLE_ARG(args, NSDictionary);
+	
+	id success = [args objectForKey:@"success"];
+	id error = [args objectForKey:@"error"];
+	
+	RELEASE_AND_REPLACE(copyRefSuccessCallback, success);
+	RELEASE_AND_REPLACE(copyRefErrorCallback, error);
+	
+	id path = [args objectForKey:@"path"];
+	ENSURE_TYPE(path, NSString);
+	
+	[self.restClient createCopyRef:path];
+}
+
+-(void)restClient:(DBRestClient *)client createdCopyRef:(NSString *)copyRef {
+	NSDictionary *event = [NSDictionary dictionaryWithObject:copyRef forKey:@"copyRef"];
+	
+	if(copyRefSuccessCallback)
+		[self _fireEventToListener:@"success" withObject:event listener:copyRefSuccessCallback thisObject:nil];
+}
+
+-(void)restClient:(DBRestClient *)client createCopyRefFailedWithError:(NSError *)error {
+	NSDictionary *event = error.userInfo;
+	
+	if(copyRefErrorCallback)
+		[self _fireEventToListener:@"error" withObject:event listener:copyRefErrorCallback thisObject:nil];
+}
+
 -(void)copyPath:(id)args {
   ENSURE_UI_THREAD_1_ARG(args);
   ENSURE_SINGLE_ARG(args, NSDictionary);
@@ -494,11 +524,20 @@
   RELEASE_AND_REPLACE(copyPathErrorCallback, error);
   
   id fromPath = [args objectForKey:@"fromPath"];
+	id fromCopyRef = [args objectForKey:@"fromCopyRef"];
   id toPath = [args objectForKey:@"toPath"];
-  ENSURE_TYPE(fromPath, NSString);
+	
+	if(!fromPath && !fromCopyRef)
+		[self throwException:@"fromPath or fromCopyRef is required" subreason:@"" location:CODELOCATION];
+	
   ENSURE_TYPE(toPath, NSString);
-  
-  [self.restClient copyFrom:fromPath toPath:toPath];
+	if(fromPath) {
+  	ENSURE_TYPE(fromPath, NSString);
+	  [self.restClient copyFrom:fromPath toPath:toPath];
+	} else {
+  	ENSURE_TYPE(fromCopyRef, NSString);
+		[self.restClient copyFromRef:fromCopyRef toPath:toPath];
+	}
 }
 
 - (void)restClient:(DBRestClient*)client copiedPath:(NSString *)from_path toPath:(NSString *)to_path {
@@ -513,6 +552,21 @@
   
   if(copyPathErrorCallback)
     [self _fireEventToListener:@"error" withObject:event listener:copyPathErrorCallback thisObject:nil];
+}
+
+-(void)restClient:(DBRestClient *)client copiedRef:(NSString *)copyRef to:(DBMetadata *)to {
+  NSMutableDictionary *event = [NSMutableDictionary dictionary];
+  [to dumpToDictionary:event];
+	
+	if(copyPathSuccessCallback)
+		[self _fireEventToListener:@"success" withObject:event listener:copyPathSuccessCallback thisObject:nil];
+}
+
+-(void)restClient:(DBRestClient *)client copyFromRefFailedWithError:(NSError *)error {
+	NSDictionary *event = error.userInfo;
+	
+	if(copyPathErrorCallback)
+		[self _fireEventToListener:@"error" withObject:event listener:copyPathErrorCallback thisObject:nil];
 }
 
 -(void)movePath:(id)args {

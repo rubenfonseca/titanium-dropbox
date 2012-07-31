@@ -61,7 +61,9 @@
   authenticateCancelCallback = [cancel retain];
   
   [self unlink:nil];
-  [[DBSession sharedSession] link];
+	
+	UIViewController *currentVC = [TiApp controller];
+  [[DBSession sharedSession] linkFromController:currentVC];
 }
 
 #pragma mark Internal stuff
