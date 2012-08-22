@@ -62,7 +62,8 @@
   
   [self unlink:nil];
 	
-	UIViewController *currentVC = [TiApp controller];
+	TiRootViewController *currentVC = [TiApp controller];
+	[currentVC manuallyRotateToOrientation:UIInterfaceOrientationPortrait duration:0.0];
   [[DBSession sharedSession] linkFromController:currentVC];
 }
 
