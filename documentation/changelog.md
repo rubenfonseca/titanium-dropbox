@@ -1,3 +1,19 @@
+- 2012-09-04 Ruben Fonseca <fonseka@gmail.com>
+
+    * version 2.2 released
+
+    * fix a problem when showing the Dropbox login screen on a Modal window
+
+- 2012-08-23 Ruben Fonseca <fonseka@gmail.com>
+
+    * version 2.1 released
+
+    * fixed a problem where the 'cancel' callback would not work on
+      the session login phase
+
+    * fixed a problem where the interface automaticly rotates to Portrait
+      when using the external Dropbox.app to authenticate
+
 - 2012-08-02 Ruben Fonseca <fonseka@gmail.com>
 
     * version 2.0 released

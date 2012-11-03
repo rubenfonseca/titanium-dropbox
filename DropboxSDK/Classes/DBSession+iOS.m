@@ -13,6 +13,8 @@
 #import "DBConnectController.h"
 #import "DBLog.h"
 
+#import "TiApp.h"
+#import "TiRootViewController.h"
 
 static NSString *kDBProtocolDropbox = @"dbapi-1";
 
@@ -92,6 +94,7 @@ static NSString *kDBProtocolDropbox = @"dbapi-1";
             navController.modalPresentationStyle = UIModalPresentationFormSheet;
         }
 			
+				[[TiApp controller] manuallyRotateToOrientation:UIInterfaceOrientationPortrait duration:0.0];
         [rootController presentModalViewController:navController animated:YES];
     }
 }

@@ -672,7 +672,7 @@
 				GCC_VERSION = com.apple.compilers.llvm.clang.1_0;
 				INSTALL_PATH = /usr/local/lib;
 				PRODUCT_NAME = Com0x82Dropbox;
-				TITANIUM_SDK = "/Library/Application Support/Titanium/mobilesdk/osx/$(TITANIUM_SDK_VERSION)";
+				TITANIUM_SDK = "$(TITANIUM_SDK)";
 			};
 			name = Debug;
 		};
@@ -696,7 +696,7 @@
 				GCC_VERSION = com.apple.compilers.llvm.clang.1_0;
 				INSTALL_PATH = /usr/local/lib;
 				PRODUCT_NAME = Com0x82Dropbox;
-				TITANIUM_SDK = "/Library/Application Support/Titanium/mobilesdk/osx/$(TITANIUM_SDK_VERSION)";
+				TITANIUM_SDK = "$(TITANIUM_SDK)";
 			};
 			name = Release;
 		};

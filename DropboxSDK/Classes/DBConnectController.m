@@ -254,6 +254,7 @@ extern id<DBNetworkRequestDelegate> dbNetworkRequestDelegate;
     if ([webView isLoading]) {
         [webView stopLoading];
     }
+	[[NSNotificationCenter defaultCenter] postNotificationName:@"DropboxLoginResult" object:nil userInfo:@{ @"result" : @(false) }];
     [self.navigationController dismissModalViewControllerAnimated:animated];
 }
 
