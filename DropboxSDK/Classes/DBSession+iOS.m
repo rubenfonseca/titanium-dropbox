@@ -13,8 +13,6 @@
 #import "DBConnectController.h"
 #import "DBLog.h"
 
-#import "TiApp.h"
-#import "TiRootViewController.h"
 
 static NSString *kDBProtocolDropbox = @"dbapi-1";
 
@@ -87,14 +85,13 @@ static NSString *kDBProtocolDropbox = @"dbapi-1";
     } else {
         urlStr = [NSString stringWithFormat:@"%@://%@/%@/connect_login?k=%@&s=%@&easl=1%@",
                   kDBProtocolHTTPS, kDBDropboxWebHost, kDBDropboxAPIVersion, consumerKey, secret, userIdStr];
-        UIViewController *connectController = [[[DBConnectController alloc] initWithUrl:[NSURL URLWithString:urlStr]] autorelease];
+        UIViewController *connectController = [[[DBConnectController alloc] initWithUrl:[NSURL URLWithString:urlStr] fromController:rootController] autorelease];
         UINavigationController *navController = [[[UINavigationController alloc] initWithRootViewController:connectController] autorelease];
         if (UI_USER_INTERFACE_IDIOM() == UIUserInterfaceIdiomPad) {
             connectController.modalPresentationStyle = UIModalPresentationFormSheet;
             navController.modalPresentationStyle = UIModalPresentationFormSheet;
         }
-			
-				[[TiApp controller] manuallyRotateToOrientation:UIInterfaceOrientationPortrait duration:0.0];
+
         [rootController presentModalViewController:navController animated:YES];
     }
 }
@@ -118,8 +115,8 @@ static NSString *kDBProtocolDropbox = @"dbapi-1";
         NSString *secret = [params objectForKey:@"oauth_token_secret"];
         NSString *userId = [params objectForKey:@"uid"];
         [self updateAccessToken:token accessTokenSecret:secret forUserId:userId];
-    } else if ([methodName isEqual:@"cancelled"]) {
-        DBLogInfo(@"DropboxSDK: user canceled Dropbox link");
+    } else if ([methodName isEqual:@"cancel"]) {
+        DBLogInfo(@"DropboxSDK: user cancelled Dropbox link");
     }
 
     return YES;
