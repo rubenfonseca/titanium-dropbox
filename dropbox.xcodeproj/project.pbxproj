@@ -109,7 +109,6 @@
 		3E2CA2C414CC98CD00CCA508 /* NSURLResponse+Encoding.m in Sources */ = {isa = PBXBuildFile; fileRef = 3E2CA26D14CC98CD00CCA508 /* NSURLResponse+Encoding.m */; };
 		3E2CA2C514CC98CD00CCA508 /* NSDictionary+Dropbox.m in Sources */ = {isa = PBXBuildFile; fileRef = 3E2CA26E14CC98CD00CCA508 /* NSDictionary+Dropbox.m */; };
 		3E2CA2C614CC98CD00CCA508 /* NSString+Dropbox.m in Sources */ = {isa = PBXBuildFile; fileRef = 3E2CA26F14CC98CD00CCA508 /* NSString+Dropbox.m */; };
-		3E2CA2C714CC98CD00CCA508 /* UIAlertView+Dropbox.m in Sources */ = {isa = PBXBuildFile; fileRef = 3E2CA27014CC98CD00CCA508 /* UIAlertView+Dropbox.m */; };
 		3E36112D1553F279000B3A2A /* DBDeltaEntry.m in Sources */ = {isa = PBXBuildFile; fileRef = 3E36112C1553F279000B3A2A /* DBDeltaEntry.m */; };
 		3E3611301553F280000B3A2A /* DBKeychain-iOS.m in Sources */ = {isa = PBXBuildFile; fileRef = 3E36112F1553F280000B3A2A /* DBKeychain-iOS.m */; };
 		3E3611321553F28A000B3A2A /* DBSession+iOS.m in Sources */ = {isa = PBXBuildFile; fileRef = 3E3611311553F28A000B3A2A /* DBSession+iOS.m */; };
@@ -227,7 +226,6 @@
 		3E2CA26D14CC98CD00CCA508 /* NSURLResponse+Encoding.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "NSURLResponse+Encoding.m"; sourceTree = "<group>"; };
 		3E2CA26E14CC98CD00CCA508 /* NSDictionary+Dropbox.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "NSDictionary+Dropbox.m"; sourceTree = "<group>"; };
 		3E2CA26F14CC98CD00CCA508 /* NSString+Dropbox.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "NSString+Dropbox.m"; sourceTree = "<group>"; };
-		3E2CA27014CC98CD00CCA508 /* UIAlertView+Dropbox.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "UIAlertView+Dropbox.m"; sourceTree = "<group>"; };
 		3E36112C1553F279000B3A2A /* DBDeltaEntry.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = DBDeltaEntry.m; sourceTree = "<group>"; };
 		3E36112F1553F280000B3A2A /* DBKeychain-iOS.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "DBKeychain-iOS.m"; sourceTree = "<group>"; };
 		3E3611311553F28A000B3A2A /* DBSession+iOS.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "DBSession+iOS.m"; sourceTree = "<group>"; };
@@ -353,7 +351,6 @@
 				3E2CA25C14CC98CD00CCA508 /* MPOAuth */,
 				3E2CA26E14CC98CD00CCA508 /* NSDictionary+Dropbox.m */,
 				3E2CA26F14CC98CD00CCA508 /* NSString+Dropbox.m */,
-				3E2CA27014CC98CD00CCA508 /* UIAlertView+Dropbox.m */,
 			);
 			path = Classes;
 			sourceTree = "<group>";
@@ -630,7 +627,6 @@
 				3E2CA2C414CC98CD00CCA508 /* NSURLResponse+Encoding.m in Sources */,
 				3E2CA2C514CC98CD00CCA508 /* NSDictionary+Dropbox.m in Sources */,
 				3E2CA2C614CC98CD00CCA508 /* NSString+Dropbox.m in Sources */,
-				3E2CA2C714CC98CD00CCA508 /* UIAlertView+Dropbox.m in Sources */,
 				3E36112D1553F279000B3A2A /* DBDeltaEntry.m in Sources */,
 				3E3611301553F280000B3A2A /* DBKeychain-iOS.m in Sources */,
 				3E3611321553F28A000B3A2A /* DBSession+iOS.m in Sources */,
@@ -712,6 +708,7 @@
 				GCC_OPTIMIZATION_LEVEL = 0;
 				GCC_WARN_ABOUT_RETURN_TYPE = YES;
 				GCC_WARN_UNUSED_VARIABLE = YES;
+				IPHONEOS_DEPLOYMENT_TARGET = 4.3;
 				OTHER_LDFLAGS = (
 					"-framework",
 					Security,
@@ -734,6 +731,7 @@
 				GCC_C_LANGUAGE_STANDARD = c99;
 				GCC_WARN_ABOUT_RETURN_TYPE = YES;
 				GCC_WARN_UNUSED_VARIABLE = YES;
+				IPHONEOS_DEPLOYMENT_TARGET = 4.3;
 				OTHER_LDFLAGS = (
 					"-framework",
 					Security,

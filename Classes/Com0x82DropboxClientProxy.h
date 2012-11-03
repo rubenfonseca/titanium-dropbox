@@ -49,6 +49,9 @@
 	
 	KrollCallback *copyRefSuccessCallback;
 	KrollCallback *copyRefErrorCallback;
+	
+	KrollCallback *deltaSuccessCallback;
+	KrollCallback *deltaErrorCallback;
 }
 
 -(void)loadAccountInfo:(id)args;

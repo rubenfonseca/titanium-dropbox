@@ -241,6 +241,37 @@ copy that file to another user&#8217;s Dropbox. It accepts a dictionary:</p>
 <li>success[callback]: called with the search results on the <code>results</code> key</li>
 <li>error[callback]: called if the search fails</li>
 </ul>
+
+<h3 id="dropbox.client.loaddelta">dropbox.client.loadDelta({&#8230;})</h3>
+
+<p>A way of letting you keep up with changes to files and folders in a user&#8217;s
+Dropbox. You can periodically call loadDelta to get a list of &#8220;delta entries&#8221;,
+which are instructions on how to update your local state to match the server&#8217;s
+state. It accepts a dictionary:</p>
+
+<ul>
+<li>cursor[string]: A string that is used to keep track of your current state.
+ On the next call pass in this value to return delta entries that have been
+ recorded since the cursor was returned.</li>
+<li>success[callback]: called if the loadDelta succeeds</li>
+<li>error[callback]: called if the loadDelta fails</li>
+</ul>
+
+<h4 id="successcallback">Success callback</h4>
+
+<p>The event on the success callback has the following keys:</p>
+
+<ul>
+<li>reset[boolean]: If <code>true</code>, clear your local state before processing the delta
+ entries. reset is always true on the initial call.</li>
+<li>cursor[string]: A string that encodes the latest information that has been
+ returned. On the next call to loadDelta, pass in this value.</li>
+<li>has_more[boolean]: If <code>true</code>, then there are more entries available; you can
+ call loadDelta again immediately to retrieve those entries. If <code>false</code>, then
+ wait for at least five minutes (preferably longer) before checking again.</li>
+<li>entries[array]: each delta entry is a 2-item list of <code>[path, metadata]</code>. See
+ the <a href="https://www.dropbox.com/developers/reference/api#delta">official docs for more details</a></li>
+</ul>
     </div>
 </body>
 </html>

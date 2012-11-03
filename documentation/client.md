@@ -173,3 +173,30 @@ Searches a directory for entries matching the query. It accepts a dictionary:
 - success[callback]: called with the search results on the `results` key
 - error[callback]: called if the search fails
 
+### dropbox.client.loadDelta({...})
+
+A way of letting you keep up with changes to files and folders in a user's
+Dropbox. You can periodically call loadDelta to get a list of "delta entries",
+which are instructions on how to update your local state to match the server's
+state. It accepts a dictionary:
+
+- cursor[string]:  A string that is used to keep track of your current state.
+  On the next call pass in this value to return delta entries that have been
+  recorded since the cursor was returned.
+- success[callback]: called if the loadDelta succeeds
+- error[callback]: called if the loadDelta fails
+
+#### Success callback
+
+The event on the success callback has the following keys:
+
+- reset[boolean]: If `true`, clear your local state before processing the delta
+  entries. reset is always true on the initial call.
+- cursor[string]: A string that encodes the latest information that has been
+  returned. On the next call to loadDelta, pass in this value.
+- has_more[boolean]: If `true`, then there are more entries available; you can
+  call loadDelta again immediately to retrieve those entries. If `false`, then
+  wait for at least five minutes (preferably longer) before checking again.
+- entries[array]: each delta entry is a 2-item list of `[path, metadata]`. See
+  the [official docs for more details](https://www.dropbox.com/developers/reference/api#delta)
+

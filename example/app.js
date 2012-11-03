@@ -267,6 +267,25 @@ function movePath() {
   });
 }
 
+var cursor = null;
+function loadDelta() {
+  client.loadDelta({
+    cursor: cursor,
+    success: function(e) {
+      cursor = e.cursor;
+
+      Ti.API.log("------ DELTA RESULT ------");
+      Ti.API.log("Has more? " + e.has_more);
+      Ti.API.log("Should reset? " + e.reset);
+      Ti.API.log("Entries: " + JSON.stringify(e.entries));
+    },
+    error: function(e) {
+      Ti.API.log("DELTA ERROR");
+      Ti.API.log(e);
+    }
+  });
+}
+
 var data = [
   {title:'Link account', hasChild:true, callback: link_account, header:'Authentication'},
   {title:'Unlink account', hasChild:true, callback: unlink},
@@ -281,6 +300,7 @@ var data = [
   {title:'Copy from copyref', hasChild:true, callback:copyRef},
   {title:'Copy path', hasChild:true, callback: copyPath},
   {title:'Move path', hasChild:true, callback: movePath},
+  {title:'Load delta', hasChild:true, callback: loadDelta},
 ];
 
 var tableview = Ti.UI.createTableView({

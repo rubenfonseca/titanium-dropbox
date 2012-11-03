@@ -1,3 +1,11 @@
+- 2012-11-03 Ruben Fonseca <fonseka@gmail.com>
+
+    * verison 2.3 released
+
+    * added a new loadDelta({..}) call
+
+    * moved to latest Dropbox SDK (1.3.2)
+
 - 2012-09-04 Ruben Fonseca <fonseka@gmail.com>
 
     * version 2.2 released

@@ -13,6 +13,7 @@
 
 #import "DBMetadata+Dumper.h"
 #import "DBRestClient+OverwriteUpload.h"
+#import "DBDeltaEntry.h"
 
 @interface Com0x82DropboxClientProxy () <DBRestClientDelegate>
 @property (nonatomic, readonly) DBRestClient* restClient;
@@ -67,6 +68,9 @@
 	
 	RELEASE_TO_NIL(searchSuccesCallback);
 	RELEASE_TO_NIL(searchErrorCallback);
+	
+	RELEASE_TO_NIL(deltaSuccessCallback);
+	RELEASE_TO_NIL(deltaErrorCallback);
   
   [super dealloc];
 }
@@ -598,6 +602,53 @@
   
   if(movePathErrorCallback)
     [self _fireEventToListener:@"error" withObject:event listener:movePathErrorCallback thisObject:nil];
+}
+
+-(void)loadDelta:(id)args {
+	ENSURE_UI_THREAD_1_ARG(args);
+	ENSURE_SINGLE_ARG(args, NSDictionary);
+	
+	KrollCallback *success; ENSURE_ARG_FOR_KEY(success, args, @"success", KrollCallback);
+	KrollCallback *error; ENSURE_ARG_FOR_KEY(error, args, @"error", KrollCallback);
+	
+	RELEASE_AND_REPLACE(deltaSuccessCallback, success);
+	RELEASE_AND_REPLACE(deltaErrorCallback, error);
+	
+	NSString *cursor; ENSURE_ARG_OR_NIL_FOR_KEY(cursor, args, @"cursor", NSString);
+	
+	[self.restClient loadDelta:cursor];
+}
+
+-(void)restClient:(DBRestClient *)client loadedDeltaEntries:(NSArray *)entries reset:(BOOL)shouldReset cursor:(NSString *)cursor hasMore:(BOOL)hasMore {
+	
+	NSMutableArray *entriesList = [NSMutableArray arrayWithCapacity:[entries count]];
+	[entries enumerateObjectsUsingBlock:^(id obj, NSUInteger idx, BOOL *stop) {
+		DBDeltaEntry *deltaEntry = (DBDeltaEntry *)obj;
+		
+		NSMutableDictionary *metadata = nil;
+		if(deltaEntry.metadata) {
+			metadata = [NSMutableDictionary dictionary];
+			[deltaEntry.metadata dumpToDictionary:metadata];
+		}
+		[entriesList addObject:@[deltaEntry.lowercasePath, metadata ? metadata : [NSNull null]]];
+	}];
+	
+	NSDictionary *event = @{
+		@"entries"  : entriesList,
+		@"reset"    : @(shouldReset),
+		@"cursor"   : cursor,
+		@"has_more" : @(hasMore)
+	};
+	
+	if(deltaSuccessCallback)
+		[self _fireEventToListener:@"success" withObject:event listener:deltaSuccessCallback thisObject:nil];
+}
+
+-(void)restClient:(DBRestClient *)client loadDeltaFailedWithError:(NSError *)error {
+	NSDictionary *event = error.userInfo;
+	
+	if(deltaErrorCallback)
+		[self _fireEventToListener:@"error" withObject:event listener:deltaErrorCallback thisObject:nil];
 }
 
 #pragma mark Private Methods
