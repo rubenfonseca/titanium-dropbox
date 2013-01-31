@@ -235,6 +235,51 @@ function uploadFile() {
   });
 }
 
+function uploadChunkedFile() {
+  Ti.Media.openPhotoGallery({
+    success: function(e) {
+      var tempDir = Ti.Filesystem.createTempDirectory();
+      var mediafile = Ti.Filesystem.getFile(tempDir.nativePath, "foo.jpg");
+      mediafile.write(e.media);
+
+      var progressBar = Ti.UI.createProgressBar({
+        max: 1,
+        min: 0,
+        value: 0,
+        left: 10,
+        right: 10,
+        style: Ti.UI.iPhone.ProgressBarStyle.PLAIN
+      });
+      tableview.footerView = progressBar;
+      progressBar.show();
+
+      client.uploadChunkedFile({
+        file: mediafile,
+        path: '/Photos/',
+        success: function(event) {
+          Ti.API.log("UPLOAD CHUNKED SUCCESS");
+          Ti.API.log(event);
+
+          alert('File chunks uploaded!');
+          tableview.footerView = null;
+        },
+        progress: function(event) {
+          Ti.API.log("UPLOAD CHUNK PROGRESS");
+          Ti.API.log(event);
+
+          progressBar.value = event.progress;
+        },
+        error: function(event) {
+          Ti.API.log("UPLOAD CHUNK ERROR");
+          Ti.API.log(event);
+          tableview.footerView = null;
+        }
+      });
+    }
+  });
+}
+
+
 function copyPath() {
   client.copyPath({
     fromPath: '/Photos/foo.jpg',
@@ -296,11 +341,12 @@ var data = [
   {title:'Create folder', hasChild:true, callback:createFolder},
   {title:'Delete folder', hasChild:true, callback:deleteFolder},
   {title:'Upload file', hasChild:true, callback:uploadFile},
+  {title:'Upload chunked file', hasChild:true, callback:uploadChunkedFile},
   {title:'Get copyref', hasChild:true, callback: getCopyRef},
   {title:'Copy from copyref', hasChild:true, callback:copyRef},
   {title:'Copy path', hasChild:true, callback: copyPath},
   {title:'Move path', hasChild:true, callback: movePath},
-  {title:'Load delta', hasChild:true, callback: loadDelta},
+  {title:'Load delta', hasChild:true, callback: loadDelta}
 ];
 
 var tableview = Ti.UI.createTableView({
