@@ -25,6 +25,7 @@
   
   NSMutableDictionary *loadFileDictionary;
   NSMutableDictionary *uploadFileDictionary;
+	NSMutableDictionary *chunkedUploadFileDictionary;
   
   KrollCallback *createFolderSuccessCallback;
   KrollCallback *createFolderErrorCallback;

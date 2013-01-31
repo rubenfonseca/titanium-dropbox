@@ -11,6 +11,7 @@
 #import <CommonCrypto/CommonDigest.h>
 
 #import "DBConnectController.h"
+#import "DBRestClient.h"
 #import "DBLog.h"
 
 
@@ -83,8 +84,8 @@ static NSString *kDBProtocolDropbox = @"dbapi-1";
         urlStr = [NSString stringWithFormat:@"%@?k=%@&s=%@%@", dbURL, consumerKey, secret, userIdStr];
         [[UIApplication sharedApplication] openURL:[NSURL URLWithString:urlStr]];
     } else {
-        urlStr = [NSString stringWithFormat:@"%@://%@/%@/connect_login?k=%@&s=%@&easl=1%@",
-                  kDBProtocolHTTPS, kDBDropboxWebHost, kDBDropboxAPIVersion, consumerKey, secret, userIdStr];
+        urlStr = [NSString stringWithFormat:@"%@://%@/%@/connect_login?k=%@&s=%@&easl=1%@&l=%@",
+                  kDBProtocolHTTPS, kDBDropboxWebHost, kDBDropboxAPIVersion, consumerKey, secret, userIdStr, @"pt-PT"];
         UIViewController *connectController = [[[DBConnectController alloc] initWithUrl:[NSURL URLWithString:urlStr] fromController:rootController] autorelease];
         UINavigationController *navController = [[[UINavigationController alloc] initWithRootViewController:connectController] autorelease];
         if (UI_USER_INTERFACE_IDIOM() == UIUserInterfaceIdiomPad) {

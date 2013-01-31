@@ -22,10 +22,12 @@
 @implementation Com0x82DropboxClientProxy
 
 #pragma mark Memory management 
+
 -(id)init {
   if(self = [super init]) {
     loadFileDictionary = [[NSMutableDictionary alloc] init];
     uploadFileDictionary = [[NSMutableDictionary alloc] init];
+		chunkedUploadFileDictionary = [[NSMutableDictionary alloc] init];
   }
   
   return self;
@@ -47,6 +49,7 @@
   
   RELEASE_TO_NIL(loadFileDictionary);
   RELEASE_TO_NIL(uploadFileDictionary);
+	RELEASE_TO_NIL(chunkedUploadFileDictionary);
   
   RELEASE_TO_NIL(createFolderSuccessCallback);
   RELEASE_TO_NIL(createFolderErrorCallback);
@@ -418,6 +421,107 @@
 		[self _fireEventToListener:@"error" withObject:event listener:searchErrorCallback thisObject:nil];
 }
 
+#define kChunkedUploadFileSuccessCallback @"ChunkedUploadSuccessCallback"
+#define kChunkedUploadFileErrorCallback @"ChunkedUploadErrorCallback"
+#define kChunkedUploadProgressCallback @"ChunkedUploadProgressCallback"
+
+-(void)uploadChunkedFile:(id)args {
+	ENSURE_UI_THREAD_1_ARG(args);
+	ENSURE_SINGLE_ARG(args, NSDictionary);
+	
+	id success = [args objectForKey:@"success"];
+	id progress = [args objectForKey:@"progress"];
+	id error = [args objectForKey:@"error"];
+	
+  id file = [args objectForKey:@"file"];
+  id path = [args objectForKey:@"path"];
+  id fileName = [args objectForKey:@"filename"];
+  id parentRev = [args objectForKey:@"parentRev"];
+  
+  ENSURE_TYPE(file, TiFile);
+  ENSURE_TYPE(path, NSString);
+  ENSURE_TYPE_OR_NIL(fileName, NSString);
+  ENSURE_TYPE_OR_NIL(parentRev, NSString);
+	
+  if(fileName == nil)
+    fileName = [[file path] lastPathComponent];
+
+  NSMutableDictionary *callbacks = [@{
+		kChunkedUploadFileSuccessCallback: success,
+		kChunkedUploadFileErrorCallback: error,
+		kChunkedUploadProgressCallback: progress,
+		
+		@"path": path,
+		@"fileName": fileName,
+		@"fileSize": @([(TiFile *)file size]),
+	} mutableCopy];
+	
+	if(parentRev)
+		[callbacks setValue:parentRev forKey:@"parentRev"];
+	
+  [chunkedUploadFileDictionary setValue:callbacks forKey:[file path]];
+	
+	[self.restClient uploadFileChunk:nil offset:0 fromPath:[file path]];
+}
+
+-(void)restClient:(DBRestClient *)client uploadedFileChunk:(NSString *)uploadId newOffset:(unsigned long long)offset fromFile:(NSString *)localPath expires:(NSDate *)expiresDate {
+	NSDictionary *metadata = chunkedUploadFileDictionary[localPath];
+	NSAssert(metadata != nil, @"Metadata is not null");
+	
+	// Calculate progress
+	double progress = (double)offset / (double)[metadata[@"fileSize"] unsignedLongLongValue];
+	if(metadata[kChunkedUploadProgressCallback]) {
+		[self _fireEventToListener:@"progress" withObject:@{ @"progress" : @(progress), @"path": metadata[@"path"] } listener:metadata[kChunkedUploadProgressCallback] thisObject:nil];
+	}
+	
+	if(offset >= [metadata[@"fileSize"] unsignedLongLongValue]) {
+		// Finalize the upload
+		NSLog(@"Finalizing chunk upload ID %@", uploadId);
+		
+		[chunkedUploadFileDictionary removeObjectForKey:localPath];
+		chunkedUploadFileDictionary[uploadId] = metadata;
+		
+		[self.restClient uploadFile:metadata[@"fileName"] toPath:metadata[@"path"] withParentRev:metadata[@"parentRev"] fromUploadId:uploadId];
+	} else {
+		NSLog(@"Continuing chunk upload on upload ID %@ offset %lld", uploadId, offset);
+		[self.restClient uploadFileChunk:uploadId offset:offset fromPath:localPath];
+	}
+}
+
+-(void)restClient:(DBRestClient *)client uploadFileChunkFailedWithError:(NSError *)error {
+	NSDictionary *metadata = chunkedUploadFileDictionary[error.userInfo[@"fromPath"]];
+	
+	if(metadata && metadata[kChunkedUploadFileErrorCallback]) {
+		[self _fireEventToListener:@"error" withObject:error.userInfo listener:metadata[kChunkedUploadFileErrorCallback] thisObject:nil];
+		
+		[chunkedUploadFileDictionary removeObjectForKey:error.userInfo[@"fromPath"]];
+	}
+}
+
+-(void)restClient:(DBRestClient *)client uploadFromUploadIdFailedWithError:(NSError *)error {
+	NSDictionary *metadata = chunkedUploadFileDictionary[error.userInfo[@"uploadId"]];
+	
+	if(metadata[kChunkedUploadFileErrorCallback]) {
+		[self _fireEventToListener:@"error" withObject:error.userInfo listener:metadata[kChunkedUploadFileErrorCallback] thisObject:nil];
+		
+		[chunkedUploadFileDictionary removeObjectForKey:error.userInfo[@"uploadId"]];
+	}
+}
+
+-(void)restClient:(DBRestClient *)client uploadedFile:(NSString *)destPath fromUploadId:(NSString *)uploadId metadata:(DBMetadata *)metadata {
+  NSMutableDictionary *event = [NSMutableDictionary dictionary];
+  [metadata dumpToDictionary:event];
+  [event setValue:destPath forKey:@"path"];
+	[event setValue:uploadId forKey:@"uploadID"];
+	
+	NSDictionary *callbacks = chunkedUploadFileDictionary[uploadId];
+	if(callbacks && callbacks[kChunkedUploadFileSuccessCallback]) {
+		[self _fireEventToListener:@"success" withObject:event listener:callbacks[kChunkedUploadFileSuccessCallback] thisObject:nil];
+	
+		[chunkedUploadFileDictionary removeObjectForKey:uploadId];
+	}
+}
+
 #define kUploadFileSuccessCallback @"UploadFileSuccessCallback"
 #define kUploadFileErrorCallback @"UploadFileErrorCallback"
 #define kUploadFileProgressCallback @"UploadFileProgressCallback"
@@ -459,13 +563,15 @@
   [event setValue:destPath forKey:@"path"];
   
   NSMutableDictionary *callbacks = [uploadFileDictionary valueForKey:srcPath];
-  
-  if([callbacks valueForKey:kUploadFileSuccessCallback])
-    [self _fireEventToListener:@"success" withObject:event listener:[callbacks valueForKey:kUploadFileSuccessCallback] thisObject:nil];
-  
-  [uploadFileDictionary removeObjectForKey:srcPath];
+	if(callbacks) {
+		if([callbacks valueForKey:kUploadFileSuccessCallback])
+			[self _fireEventToListener:@"success" withObject:event listener:[callbacks valueForKey:kUploadFileSuccessCallback] thisObject:nil];
+		
+		[uploadFileDictionary removeObjectForKey:srcPath];
+	}
 }
-- (void)restClient:(DBRestClient*)client uploadProgress:(CGFloat)progress 
+	
+- (void)restClient:(DBRestClient*)client uploadProgress:(CGFloat)progress
            forFile:(NSString*)destPath from:(NSString*)srcPath {
   NSMutableDictionary *event = [NSMutableDictionary dictionary];
   [event setValue:NUMFLOAT(progress) forKey:@"progress"];

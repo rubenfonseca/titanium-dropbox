@@ -77,6 +77,8 @@ Tries to get the file from a path. It accepts a dictionary with the following op
       var imageView = Ti.UI.createImageView({image:e.file});
 
 - error[callback]: called if the method returns an error
+- progress[callback]: called during the upload. It has a 'progress' event
+  property with the progress of the upload, ranging from 0 to 1
 
 ### dropbox.client.cancelFileLoad(path)
 
@@ -109,6 +111,20 @@ Uploads a new file to Dropbox. It accepts a dictionary with the following option
 - overwrite[boolean]: [optional] if `true`, the upload doesn't create a new file
   if the target path already exists. The default value is `false`, so if the
   target file already exists, a new file is created, and never overwritten. 
+- success[callback]: called if the upload succeeds<br />
+- error[callback]: called if the upload fails<br />
+- progress[callback]: called during the upload. It has a 'progress' event
+  property with the progress of the upload, ranging from 0 to 1
+
+### client.uploadChunkedFile({...})
+
+Uploads large files to Dropbox in mulitple chunks. This allos for upload larger
+than 150 MB files. The parameters are very similar to the `uploadFile` method.
+
+- file[string]: the path of the file you want to upload<br />
+- path[string]: the path where the file will be uplaoded. **This should include the file name** <br />
+- parentRev[string]: [optional] the previous revision of the file. This value
+  can be obtained using the .getMetadata method, under the key `rev`
 - success[callback]: called if the upload succeeds<br />
 - error[callback]: called if the upload fails<br />
 - progress[callback]: called during the upload. It has a 'progress' event

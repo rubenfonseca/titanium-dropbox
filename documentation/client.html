@@ -112,6 +112,8 @@ contents[object]: an array of metadata for the directory<br /></p>
 
 <p>var imageView = Ti.UI.createImageView({image:e.file});</p></li>
 <li><p>error[callback]: called if the method returns an error</p></li>
+<li><p>progress[callback]: called during the upload. It has a &#8216;progress&#8217; event
+ property with the progress of the upload, ranging from 0 to 1</p></li>
 </ul>
 
 <h3 id="dropbox.client.cancelfileloadpath">dropbox.client.cancelFileLoad(path)</h3>
@@ -150,6 +152,22 @@ contents[object]: an array of metadata for the directory<br /></p>
 <li>overwrite[boolean]: [optional] if <code>true</code>, the upload doesn&#8217;t create a new file
  if the target path already exists. The default value is <code>false</code>, so if the
  target file already exists, a new file is created, and never overwritten.</li>
+<li>success[callback]: called if the upload succeeds<br /></li>
+<li>error[callback]: called if the upload fails<br /></li>
+<li>progress[callback]: called during the upload. It has a &#8216;progress&#8217; event
+ property with the progress of the upload, ranging from 0 to 1</li>
+</ul>
+
+<h3 id="client.uploadchunkedfile">client.uploadChunkedFile({&#8230;})</h3>
+
+<p>Uploads large files to Dropbox in mulitple chunks. This allos for upload larger
+than 150 MB files. The parameters are very similar to the <code>uploadFile</code> method.</p>
+
+<ul>
+<li>file[string]: the path of the file you want to upload<br /></li>
+<li>path[string]: the path where the file will be uplaoded. <strong>This should include the file name</strong> <br /></li>
+<li>parentRev[string]: [optional] the previous revision of the file. This value
+ can be obtained using the .getMetadata method, under the key <code>rev</code></li>
 <li>success[callback]: called if the upload succeeds<br /></li>
 <li>error[callback]: called if the upload fails<br /></li>
 <li>progress[callback]: called during the upload. It has a &#8216;progress&#8217; event

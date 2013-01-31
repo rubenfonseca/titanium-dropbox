@@ -4,4 +4,35 @@
     #import <UIKit/UIKit.h>
 
     #import "DropboxSDK.h"
+
+#if __IPHONE_OS_VERSION_MAX_ALLOWED < 60000
+@interface NSDictionary(subscripts)
+- (id)objectForKeyedSubscript:(id)key;
+@end
+
+@interface NSMutableDictionary(subscripts)
+- (void)setObject:(id)obj forKeyedSubscript:(id <NSCopying>)key;
+@end
+
+@interface NSArray(subscripts)
+- (id)objectAtIndexedSubscript:(NSUInteger)idx;
+@end
+
+@interface NSMutableArray(subscripts)
+- (void)setObject:(id)obj atIndexedSubscript:(NSUInteger)idx;
+@end
 #endif
+
+#endif
+
+#define kBase64EncodeTable DBkBase64EncodeTable
+#define kBase64DecodeTable DBkBase64DecodeTable
+
+#define kBits_00000011 DBkBits_00000011
+#define kBits_00001111 DBkBits_00001111
+#define kBits_00110000 DBkBits_00110000
+#define kBits_00111100 DBkBits_00111100
+#define kBits_00111111 DBkBits_00111111
+#define kBits_11000000 DBkBits_11000000
+#define kBits_11110000 DBkBits_11110000
+#define kBits_11111100 DBkBits_11111100

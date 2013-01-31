@@ -214,7 +214,6 @@ forFile:(NSString*)path;
 - (void)restClient:(DBRestClient*)restClient loadedStreamableURL:(NSURL*)url forFile:(NSString*)path;
 - (void)restClient:(DBRestClient*)restClient loadStreamableURLFailedWithError:(NSError*)error;
 
-
 @end
 
 

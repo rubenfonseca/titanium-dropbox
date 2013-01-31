@@ -1,3 +1,9 @@
+- 2013-01-28 Ruben Fonseca <fonseka@gmail.com>
+
+    * version 2.4 released
+
+    * moved to the latest Dropbox SDK to fix a bug with huge uploads
+
 - 2012-11-03 Ruben Fonseca <fonseka@gmail.com>
 
     * verison 2.3 released
