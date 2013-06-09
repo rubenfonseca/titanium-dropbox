@@ -216,3 +216,28 @@ The event on the success callback has the following keys:
 - entries[array]: each delta entry is a 2-item list of `[path, metadata]`. See
   the [official docs for more details](https://www.dropbox.com/developers/reference/api#delta)
 
+
+### dropbox.client.loadRevisions({...})
+
+Obtains metadata for the previous revisions of a file.
+
+Only revisions up to thirty days old are available (or more if the Dropbox user
+has Pack-Rat). You can use the revision number in conjunction with the `restoreRevision`
+call to revert the file to its previous state. It accepts a dictionary:
+
+- path[string]: the Dropbox path to get revisions
+- success[callback]: called with the revisions under the `revisions` key.
+- error[callback]: called if the loadRevisions fails 
+
+### dropbox.client.restoreRevision({...})
+
+Restores a file path to a previous revision.
+
+Unlike downloading a file at a given revision and then re-uploading it, this
+call is atomic. It also saves a bunch of bandwidth. It accepts a dictionary:
+
+- path[string]: the Dropbox path to restore
+- revision[string]: the exact revision reference to restore
+- success[callback]: called if the restore succeeds. It has a `metadata` key of the restored file.
+- error[callback]: called if the restore fails.
+

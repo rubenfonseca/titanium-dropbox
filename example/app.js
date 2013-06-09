@@ -331,6 +331,38 @@ function loadDelta() {
   });
 }
 
+var revisionToStore = null;
+function loadRevisions() {
+  client.loadRevisions({
+    path: "/Photos/bar.jpg",
+    success: function(e) {
+      Ti.API.log("------------ METADATAS -----------");
+      Ti.API.log(JSON.stringify(e.revisions));
+
+      revisionToStore = e.revisions[0].rev;
+    },
+    error: function(e) {
+      Ti.API.log("LOAD REVISIONS ERROR");
+      Ti.API.log(e);
+    }
+  });
+}
+
+function restoreRevision() {
+  client.restoreRevision({
+    path: "/Photos/bar.jpg",
+    revision: revisionToStore || "123123123123123123123",
+    success: function(e) {
+      Ti.API.log("------------ RESTORED -----------");
+      Ti.API.log(JSON.stringify(e.metadata));
+    },
+    error: function(e) {
+      Ti.API.log("RESTORE REVISION ERROR");
+      Ti.API.log(e);
+    }
+  });
+}
+
 var data = [
   {title:'Link account', hasChild:true, callback: link_account, header:'Authentication'},
   {title:'Unlink account', hasChild:true, callback: unlink},
@@ -346,7 +378,9 @@ var data = [
   {title:'Copy from copyref', hasChild:true, callback:copyRef},
   {title:'Copy path', hasChild:true, callback: copyPath},
   {title:'Move path', hasChild:true, callback: movePath},
-  {title:'Load delta', hasChild:true, callback: loadDelta}
+  {title:'Load delta', hasChild:true, callback: loadDelta},
+  {title:'Get revisions', hasChild:true, callback: loadRevisions},
+  {title:'Restore to revision', hasChild:true, callback: restoreRevision},
 ];
 
 var tableview = Ti.UI.createTableView({

@@ -62,7 +62,7 @@
   
   [self unlink:nil];
 	
-	UIViewController *currentVC = [[TiApp controller] focusedViewController];
+	UIViewController *currentVC = [TiApp controller];
   [[DBSession sharedSession] linkFromController:currentVC];
 }
 

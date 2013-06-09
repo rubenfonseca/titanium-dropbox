@@ -2,7 +2,7 @@
 # this is your module manifest and used by Titanium
 # during compilation, packaging, distribution, etc.
 #
-version: 2.4
+version: 2.5
 description: Dropbox SDK for Titanium Mobile
 author: Rúben Fonseca
 license: MIT

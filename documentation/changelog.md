@@ -1,3 +1,9 @@
+- 2013-05-17 Ruben Fonseca <fonseka@gmail.com>
+
+    * version 2.5 released
+
+    * added loadRevisions() and restoreRevision() calls
+
 - 2013-01-28 Ruben Fonseca <fonseka@gmail.com>
 
     * version 2.4 released

@@ -53,6 +53,12 @@
 	
 	KrollCallback *deltaSuccessCallback;
 	KrollCallback *deltaErrorCallback;
+  
+  KrollCallback *loadRevisionsSuccessCallback;
+  KrollCallback *loadRevisionsErrorCallback;
+  
+  KrollCallback *restoreSuccessCallback;
+  KrollCallback *restoreErrorCallback;
 }
 
 -(void)loadAccountInfo:(id)args;

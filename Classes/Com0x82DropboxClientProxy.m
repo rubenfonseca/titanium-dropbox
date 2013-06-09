@@ -710,6 +710,76 @@
     [self _fireEventToListener:@"error" withObject:event listener:movePathErrorCallback thisObject:nil];
 }
 
+-(void)restoreRevision:(id)args {
+  ENSURE_UI_THREAD_1_ARG(args);
+  ENSURE_SINGLE_ARG(args, NSDictionary);
+  
+  KrollCallback *success; ENSURE_ARG_FOR_KEY(success, args, @"success", KrollCallback);
+  KrollCallback *error; ENSURE_ARG_FOR_KEY(error, args, @"error", KrollCallback);
+  
+  RELEASE_AND_REPLACE(restoreSuccessCallback, success);
+  RELEASE_AND_REPLACE(restoreErrorCallback, error);
+  
+  NSString *path; ENSURE_ARG_FOR_KEY(path, args, @"path", NSString);
+  NSString *rev; ENSURE_ARG_FOR_KEY(rev, args, @"revision", NSString);
+  
+  [self.restClient restoreFile:path toRev:rev];
+}
+
+-(void)restClient:(DBRestClient *)client restoredFile:(DBMetadata *)fileMetadata {
+  NSMutableDictionary *metadata = [NSMutableDictionary dictionary];
+  [fileMetadata dumpToDictionary:metadata];
+  
+	NSDictionary *event = [NSDictionary dictionaryWithObjectsAndKeys:metadata, @"metadata", nil];
+	
+	if(restoreSuccessCallback)
+		[self _fireEventToListener:@"success" withObject:event listener:restoreSuccessCallback thisObject:nil];
+}
+
+-(void)restClient:(DBRestClient *)client restoreFileFailedWithError:(NSError *)error {
+	NSDictionary *event = error.userInfo;
+	
+	if(restoreErrorCallback)
+		[self _fireEventToListener:@"error" withObject:event listener:restoreErrorCallback thisObject:nil];
+}
+
+-(void)loadRevisions:(id)args {
+  ENSURE_UI_THREAD_1_ARG(args);
+  ENSURE_SINGLE_ARG(args, NSDictionary);
+  
+  KrollCallback *success; ENSURE_ARG_FOR_KEY(success, args, @"success", KrollCallback);
+  KrollCallback *error; ENSURE_ARG_FOR_KEY(error, args, @"error", KrollCallback);
+  
+  RELEASE_AND_REPLACE(loadRevisionsSuccessCallback, success);
+  RELEASE_AND_REPLACE(loadRevisionsErrorCallback, error);
+  
+  NSString *path; ENSURE_ARG_FOR_KEY(path, args, @"path", NSString);
+  int limit = [TiUtils intValue:@"limit" properties:args def:10];
+  
+  [self.restClient loadRevisionsForFile:path limit:limit];
+}
+
+-(void)restClient:(DBRestClient *)client loadedRevisions:(NSArray *)revisions forFile:(NSString *)path {
+  NSMutableArray *metadatas = [NSMutableArray arrayWithCapacity:[revisions count]];
+	for(DBMetadata *metadata in revisions) {
+		NSMutableDictionary *dict = [NSMutableDictionary dictionary];
+		[metadata dumpToDictionary:dict];
+		[metadatas addObject:dict];
+	}
+	
+	NSDictionary *event = [NSDictionary dictionaryWithObjectsAndKeys:path, @"path", metadatas, @"revisions", nil];
+	
+	if(loadRevisionsSuccessCallback)
+		[self _fireEventToListener:@"success" withObject:event listener:loadRevisionsSuccessCallback thisObject:nil];
+}
+
+-(void)restClient:(DBRestClient *)client loadRevisionsFailedWithError:(NSError *)error {
+	NSDictionary *event = error.userInfo;
+	
+	if(loadRevisionsErrorCallback)
+		[self _fireEventToListener:@"error" withObject:event listener:loadRevisionsErrorCallback thisObject:nil];
+}
+
 -(void)loadDelta:(id)args {
 	ENSURE_UI_THREAD_1_ARG(args);
 	ENSURE_SINGLE_ARG(args, NSDictionary);
