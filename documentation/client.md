@@ -58,7 +58,8 @@ Tries to get a thumbnail for the path. It accepts a dictionary with the followin
 - path[string]: the path you want to get the thumbnail<br />
 - size[string]: OPTIONAL specify the image size. Default = 'small'<br />
 - success[callback]: the thumbnail blob will come on the 'thumbnail' property
-  on the event. You can assign it to a ImageView like this:
+  on the event. There's also all the metadata available, like path, file size, etc.
+  You can assign it to a ImageView like this:
 
       var imageView = Ti.UI.createImageView({image:e.thumbnail});
 

@@ -88,7 +88,7 @@ function getThumbnail() {
   client.loadThumbnail({
     path: '/Photos/P1223189.JPG',
     success: function(e) {
-      Ti.API.log("SUCCESS THUMBNAIL");
+      Ti.API.log("SUCCESS THUMBNAIL: " + JSON.stringify(e));
 
       var new_window = Ti.UI.createWindow({title:'Thumbnail'});
       var image_view = Ti.UI.createImageView({image:e.thumbnail});

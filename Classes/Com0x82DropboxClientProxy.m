@@ -173,14 +173,16 @@
   [self.restClient loadThumbnail:path ofSize:size intoPath:thumbnailTempPath];
 }
 
-- (void)restClient:(DBRestClient*)client loadedThumbnail:(NSString*)destPath {
+-(void)restClient:(DBRestClient *)client loadedThumbnail:(NSString *)destPath metadata:(DBMetadata *)metadata {
   TiBlob *blob = [[[TiBlob alloc] initWithFile:thumbnailTempPath] autorelease];
   
-  NSDictionary *event = [NSDictionary dictionaryWithObjectsAndKeys:blob, @"thumbnail", nil];
+  NSMutableDictionary *event = [NSMutableDictionary dictionaryWithObjectsAndKeys:blob, @"thumbnail", nil];
+  [metadata dumpToDictionary:event];
   
   if(loadThumbnailSuccessCallback)
     [self _fireEventToListener:@"success" withObject:event listener:loadThumbnailSuccessCallback thisObject:nil];
 }
+
 - (void)restClient:(DBRestClient*)client loadThumbnailFailedWithError:(NSError*)error {
   NSDictionary *event = error.userInfo;
   

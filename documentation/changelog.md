@@ -1,3 +1,9 @@
+- 2013-09-23 Ruben Fonseca <fonseka@gmail.com>
+
+    * version 2.6 released
+
+    * added metadata to the success callback on loadThumbnail() call
+
 - 2013-05-17 Ruben Fonseca <fonseka@gmail.com>
 
     * version 2.5 released
