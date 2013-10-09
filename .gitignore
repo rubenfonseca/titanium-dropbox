@@ -2,3 +2,6 @@ tmp
 bin
 build
 modules/
+app
+Rakefile
+.DS_Store
