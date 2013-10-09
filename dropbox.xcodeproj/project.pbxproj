@@ -34,7 +34,6 @@
 		3E191E38164C3AB400B3EEAE /* DBConnectController+NSNotification.h in Headers */ = {isa = PBXBuildFile; fileRef = 3E191E36164C3AB400B3EEAE /* DBConnectController+NSNotification.h */; };
 		3E191E39164C3AB400B3EEAE /* DBConnectController+NSNotification.m in Sources */ = {isa = PBXBuildFile; fileRef = 3E191E37164C3AB400B3EEAE /* DBConnectController+NSNotification.m */; };
 		3E2CA27714CC98CD00CCA508 /* DBAccountInfo.m in Sources */ = {isa = PBXBuildFile; fileRef = 3E2CA21514CC98CD00CCA508 /* DBAccountInfo.m */; };
-		3E2CA27814CC98CD00CCA508 /* DBDefines.h in Headers */ = {isa = PBXBuildFile; fileRef = 3E2CA21614CC98CD00CCA508 /* DBDefines.h */; };
 		3E2CA27914CC98CD00CCA508 /* DBError.m in Sources */ = {isa = PBXBuildFile; fileRef = 3E2CA21714CC98CD00CCA508 /* DBError.m */; };
 		3E2CA27A14CC98CD00CCA508 /* DBLog.m in Sources */ = {isa = PBXBuildFile; fileRef = 3E2CA21814CC98CD00CCA508 /* DBLog.m */; };
 		3E2CA27B14CC98CD00CCA508 /* DBMetadata.m in Sources */ = {isa = PBXBuildFile; fileRef = 3E2CA21914CC98CD00CCA508 /* DBMetadata.m */; };
@@ -152,7 +151,6 @@
 		3E191E36164C3AB400B3EEAE /* DBConnectController+NSNotification.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = "DBConnectController+NSNotification.h"; path = "Classes/DBConnectController+NSNotification.h"; sourceTree = "<group>"; };
 		3E191E37164C3AB400B3EEAE /* DBConnectController+NSNotification.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = "DBConnectController+NSNotification.m"; path = "Classes/DBConnectController+NSNotification.m"; sourceTree = "<group>"; };
 		3E2CA21514CC98CD00CCA508 /* DBAccountInfo.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = DBAccountInfo.m; sourceTree = "<group>"; };
-		3E2CA21614CC98CD00CCA508 /* DBDefines.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = DBDefines.h; sourceTree = "<group>"; };
 		3E2CA21714CC98CD00CCA508 /* DBError.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = DBError.m; sourceTree = "<group>"; };
 		3E2CA21814CC98CD00CCA508 /* DBLog.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = DBLog.m; sourceTree = "<group>"; };
 		3E2CA21914CC98CD00CCA508 /* DBMetadata.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = DBMetadata.m; sourceTree = "<group>"; };
@@ -342,7 +340,6 @@
 				3E36112F1553F280000B3A2A /* DBKeychain-iOS.m */,
 				3E36112C1553F279000B3A2A /* DBDeltaEntry.m */,
 				3E2CA21514CC98CD00CCA508 /* DBAccountInfo.m */,
-				3E2CA21614CC98CD00CCA508 /* DBDefines.h */,
 				3E2CA21714CC98CD00CCA508 /* DBError.m */,
 				3E2CA21814CC98CD00CCA508 /* DBLog.m */,
 				3E2CA21914CC98CD00CCA508 /* DBMetadata.m */,
@@ -469,7 +466,6 @@
 				3EE509E51353407A001C442C /* Com0x82DropboxClientProxy.h in Headers */,
 				3E08DE3B14585AE90091E8DA /* DBMetadata+Dumper.h in Headers */,
 				3EA8F01A1462D3F8002B8438 /* DBRestClient+OverwriteUpload.h in Headers */,
-				3E2CA27814CC98CD00CCA508 /* DBDefines.h in Headers */,
 				3E2CA28114CC98CD00CCA508 /* DBAccountInfo.h in Headers */,
 				3E2CA28214CC98CD00CCA508 /* DBError.h in Headers */,
 				3E2CA28314CC98CD00CCA508 /* DBJSON.h in Headers */,

@@ -19,9 +19,7 @@
   KrollCallback *loadMetadataUnchangedCallback;
   KrollCallback *loadMetadataErrorCallback;
   
-  KrollCallback *loadThumbnailSuccessCallback;
-  KrollCallback *loadThumbnailErrorCallback;
-  NSString *thumbnailTempPath;
+	NSMutableDictionary *loadThumbnailDictionary;
   
   NSMutableDictionary *loadFileDictionary;
   NSMutableDictionary *uploadFileDictionary;

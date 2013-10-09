@@ -25,9 +25,10 @@
 
 -(id)init {
   if(self = [super init]) {
-    loadFileDictionary = [[NSMutableDictionary alloc] init];
-    uploadFileDictionary = [[NSMutableDictionary alloc] init];
+    loadFileDictionary          = [[NSMutableDictionary alloc] init];
+    uploadFileDictionary        = [[NSMutableDictionary alloc] init];
 		chunkedUploadFileDictionary = [[NSMutableDictionary alloc] init];
+		loadThumbnailDictionary     = [[NSMutableDictionary alloc] init];
   }
   
   return self;
@@ -43,10 +44,7 @@
   RELEASE_TO_NIL(loadMetadataUnchangedCallback);
   RELEASE_TO_NIL(loadMetadataErrorCallback);
   
-  RELEASE_TO_NIL(loadThumbnailSuccessCallback);
-  RELEASE_TO_NIL(loadThumbnailErrorCallback);
-  RELEASE_TO_NIL(thumbnailTempPath);
-  
+	RELEASE_TO_NIL(loadThumbnailDictionary);
   RELEASE_TO_NIL(loadFileDictionary);
   RELEASE_TO_NIL(uploadFileDictionary);
 	RELEASE_TO_NIL(chunkedUploadFileDictionary);
@@ -152,15 +150,17 @@
     [self _fireEventToListener:@"error" withObject:event listener:loadMetadataErrorCallback thisObject:nil];
 }
 
+#define kLoadFileSuccessCallback @"LoadfileSuccessCallback"
+#define kLoadFileErrorCallback @"LoadFileErrorCallback"
+#define kLoadFileProgressCallback @"LoadFileProgressCallback"
+#define kLoadFileTempFilePath @"LoadFileTempFilePath"
+
 -(void)loadThumbnail:(id)args {
   ENSURE_UI_THREAD_1_ARG(args);
   ENSURE_SINGLE_ARG(args, NSDictionary);
   
   id success = [args objectForKey:@"success"];
   id error = [args objectForKey:@"error"];
-  
-  RELEASE_AND_REPLACE(loadThumbnailSuccessCallback, success);
-  RELEASE_AND_REPLACE(loadThumbnailErrorCallback, error);
     
   id path = [args objectForKey:@"path"];
   id size = [args objectForKey:@"size"];
@@ -168,32 +168,42 @@
   ENSURE_TYPE_OR_NIL(size, NSString);
   if(size == nil)
     size = @"small";
-  
-  thumbnailTempPath = [NSTemporaryDirectory() stringByAppendingString:@"thumbnail.jpg"];
-  [self.restClient loadThumbnail:path ofSize:size intoPath:thumbnailTempPath];
+	
+	CFUUIDRef uuid = CFUUIDCreate(nil);
+  NSString *uuidString = (NSString*)CFUUIDCreateString(nil, uuid);
+  CFRelease(uuid);
+	
+  NSString *fileTempPath = [NSTemporaryDirectory() stringByAppendingString:uuidString];
+	NSDictionary *callbacks = @{ kLoadFileSuccessCallback: success, kLoadFileErrorCallback: error };
+	
+	[loadThumbnailDictionary setValue:callbacks forKey:fileTempPath];
+	
+  [self.restClient loadThumbnail:path ofSize:size intoPath:fileTempPath];
 }
 
 -(void)restClient:(DBRestClient *)client loadedThumbnail:(NSString *)destPath metadata:(DBMetadata *)metadata {
-  TiBlob *blob = [[[TiBlob alloc] initWithFile:thumbnailTempPath] autorelease];
+  TiBlob *blob = [[[TiBlob alloc] initWithFile:destPath] autorelease];
   
   NSMutableDictionary *event = [NSMutableDictionary dictionaryWithObjectsAndKeys:blob, @"thumbnail", nil];
   [metadata dumpToDictionary:event];
+	
+	NSDictionary *callbacks = [loadThumbnailDictionary valueForKey:destPath];
+	if([callbacks valueForKey:kLoadFileSuccessCallback])
+		[self _fireEventToListener:@"success" withObject:event listener:[callbacks valueForKey:kLoadFileSuccessCallback] thisObject:nil];
   
-  if(loadThumbnailSuccessCallback)
-    [self _fireEventToListener:@"success" withObject:event listener:loadThumbnailSuccessCallback thisObject:nil];
+  [loadThumbnailDictionary removeObjectForKey:destPath];
 }
 
 - (void)restClient:(DBRestClient*)client loadThumbnailFailedWithError:(NSError*)error {
   NSDictionary *event = error.userInfo;
   
-  if(loadThumbnailErrorCallback)
-    [self _fireEventToListener:@"error" withObject:event listener:loadThumbnailErrorCallback thisObject:nil];
+	NSString *destPath = [[error userInfo] valueForKey:@"destinationPath"];
+  NSDictionary *callbacks = [loadThumbnailDictionary valueForKey:destPath];
+	if([callbacks valueForKey:kLoadFileErrorCallback])
+		[self _fireEventToListener:@"error" withObject:event listener:[callbacks valueForKey:kLoadFileErrorCallback] thisObject:nil];
+  
+  [loadThumbnailDictionary removeObjectForKey:destPath];
 }
-
-#define kLoadFileSuccessCallback @"LoadfileSuccessCallback"
-#define kLoadFileErrorCallback @"LoadFileErrorCallback"
-#define kLoadFileProgressCallback @"LoadFileProgressCallback"
-#define kLoadFileTempFilePath @"LoadFileTempFilePath"
 
 -(void)loadFile:(id)args {
   ENSURE_UI_THREAD_1_ARG(args);
