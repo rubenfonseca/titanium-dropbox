@@ -1,0 +1,41 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
+<plist version="1.0">
+<dict>
+	<key>IDESourceControlProjectFavoriteDictionaryKey</key>
+	<false/>
+	<key>IDESourceControlProjectIdentifier</key>
+	<string>D2F7E39C-2BBF-4737-AE04-D74361E43989</string>
+	<key>IDESourceControlProjectName</key>
+	<string>dropbox</string>
+	<key>IDESourceControlProjectOriginsDictionary</key>
+	<dict>
+		<key>B6DD2392-EDF6-479A-B46E-C932CDD811E5</key>
+		<string>http://0x82.com/git/titanium_dropbox.git</string>
+	</dict>
+	<key>IDESourceControlProjectPath</key>
+	<string>dropbox.xcodeproj/project.xcworkspace</string>
+	<key>IDESourceControlProjectRelativeInstallPathDictionary</key>
+	<dict>
+		<key>B6DD2392-EDF6-479A-B46E-C932CDD811E5</key>
+		<string>../..</string>
+	</dict>
+	<key>IDESourceControlProjectURL</key>
+	<string>http://0x82.com/git/titanium_dropbox.git</string>
+	<key>IDESourceControlProjectVersion</key>
+	<integer>110</integer>
+	<key>IDESourceControlProjectWCCIdentifier</key>
+	<string>B6DD2392-EDF6-479A-B46E-C932CDD811E5</string>
+	<key>IDESourceControlProjectWCConfigurations</key>
+	<array>
+		<dict>
+			<key>IDESourceControlRepositoryExtensionIdentifierKey</key>
+			<string>public.vcs.git</string>
+			<key>IDESourceControlWCCIdentifierKey</key>
+			<string>B6DD2392-EDF6-479A-B46E-C932CDD811E5</string>
+			<key>IDESourceControlWCCName</key>
+			<string>dropbox</string>
+		</dict>
+	</array>
+</dict>
+</plist>

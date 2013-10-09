@@ -1,3 +1,9 @@
+- 2013-10-09 Ruben Fonseca <fonseka@gmail.com>
+
+    * version 2.7 released
+
+    * Upgrade to Dropbox SDK 1.3.8, which includes lots of iOS7 fixes
+
 - 2013-09-23 Ruben Fonseca <fonseka@gmail.com>
 
     * version 2.6 released
