@@ -436,6 +436,7 @@
 #define kChunkedUploadFileSuccessCallback @"ChunkedUploadSuccessCallback"
 #define kChunkedUploadFileErrorCallback @"ChunkedUploadErrorCallback"
 #define kChunkedUploadProgressCallback @"ChunkedUploadProgressCallback"
+#define kChunkedUploadBgTask @"ChunkedUploadBgTask"
 
 -(void)uploadChunkedFile:(id)args {
 	ENSURE_UI_THREAD_1_ARG(args);
@@ -458,10 +459,16 @@
   if(fileName == nil)
     fileName = [[file path] lastPathComponent];
 
+  UIBackgroundTaskIdentifier bgTask = [[UIApplication sharedApplication] beginBackgroundTaskWithExpirationHandler:^{
+    [self.restClient cancelFileUpload:[path stringByAppendingPathComponent:fileName]];
+    [[UIApplication sharedApplication] endBackgroundTask:bgTask];
+  }];
+  
   NSMutableDictionary *callbacks = [@{
 		kChunkedUploadFileSuccessCallback: success,
 		kChunkedUploadFileErrorCallback: error,
 		kChunkedUploadProgressCallback: progress,
+    kChunkedUploadBgTask: @(bgTask),
 		
 		@"path": path,
 		@"fileName": fileName,
@@ -507,6 +514,7 @@
 		[self _fireEventToListener:@"error" withObject:error.userInfo listener:metadata[kChunkedUploadFileErrorCallback] thisObject:nil];
 		
 		[chunkedUploadFileDictionary removeObjectForKey:error.userInfo[@"fromPath"]];
+    [[UIApplication sharedApplication] endBackgroundTask:[metadata[kChunkedUploadBgTask] unsignedIntegerValue]];
 	}
 }
 
@@ -517,6 +525,7 @@
 		[self _fireEventToListener:@"error" withObject:error.userInfo listener:metadata[kChunkedUploadFileErrorCallback] thisObject:nil];
 		
 		[chunkedUploadFileDictionary removeObjectForKey:error.userInfo[@"uploadId"]];
+    [[UIApplication sharedApplication] endBackgroundTask:[metadata[kChunkedUploadBgTask] unsignedIntegerValue]];
 	}
 }
 
@@ -531,12 +540,14 @@
 		[self _fireEventToListener:@"success" withObject:event listener:callbacks[kChunkedUploadFileSuccessCallback] thisObject:nil];
 	
 		[chunkedUploadFileDictionary removeObjectForKey:uploadId];
+    [[UIApplication sharedApplication] endBackgroundTask:[callbacks[kChunkedUploadBgTask] unsignedIntegerValue]];
 	}
 }
 
 #define kUploadFileSuccessCallback @"UploadFileSuccessCallback"
 #define kUploadFileErrorCallback @"UploadFileErrorCallback"
 #define kUploadFileProgressCallback @"UploadFileProgressCallback"
+#define kUploadFileBgTask @"UploadFileBgTask"
 
 -(void)uploadFile:(id)args {
   ENSURE_UI_THREAD_1_ARG(args);
@@ -559,11 +570,17 @@
   
   if(fileName == nil)
     fileName = [[file path] lastPathComponent];
+  
+  UIBackgroundTaskIdentifier bgTask = [[UIApplication sharedApplication] beginBackgroundTaskWithExpirationHandler:^{
+    [self.restClient cancelFileUpload:[path stringByAppendingPathComponent:fileName]];
+    [[UIApplication sharedApplication] endBackgroundTask:bgTask];
+  }];
 
   NSMutableDictionary *callbacks = [NSMutableDictionary dictionaryWithObjectsAndKeys:
                                       success, kUploadFileSuccessCallback,
                                       error, kUploadFileErrorCallback,
-                                      progress, kUploadFileProgressCallback, nil];
+                                      progress, kUploadFileProgressCallback,
+                                      @(bgTask), kUploadFileBgTask, nil];
   [uploadFileDictionary setValue:callbacks forKey:[file path]];
   
   [self.restClient uploadFile:fileName toPath:path withParentRev:parentRev fromPath:[file path] withOverwrite:overwrite];
@@ -580,7 +597,8 @@
 			[self _fireEventToListener:@"success" withObject:event listener:[callbacks valueForKey:kUploadFileSuccessCallback] thisObject:nil];
 		
 		[uploadFileDictionary removeObjectForKey:srcPath];
-	}
+    [[UIApplication sharedApplication] endBackgroundTask:[callbacks[kUploadFileBgTask] unsignedIntegerValue]];
+  }
 }
 	
 - (void)restClient:(DBRestClient*)client uploadProgress:(CGFloat)progress
@@ -602,7 +620,9 @@
   
   if([callbacks valueForKey:kUploadFileErrorCallback])
     [self _fireEventToListener:@"error" withObject:event listener:[callbacks valueForKey:kUploadFileErrorCallback] thisObject:nil];
+  
   [callbacks removeObjectForKey:srcPath];
+  [[UIApplication sharedApplication] endBackgroundTask:[callbacks[kUploadFileBgTask] unsignedIntegerValue]];
 }
 
 -(void)createCopyRef:(id)args {

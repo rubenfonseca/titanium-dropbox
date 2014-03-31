@@ -1,3 +1,9 @@
+- 2014-01-29 Ruben Fonseca <fonseka@gmail.com>
+
+    * version 2.8 released
+
+    * make file uploads work on background
+
 - 2013-10-09 Ruben Fonseca <fonseka@gmail.com>
 
     * version 2.7 released
@@ -90,7 +96,7 @@
       example/app.js file
 
 - 2012-01-09 Ruben Fonseca <fonseka@gmail.com>
-  
+
     * version 1.5 released
 
     * no code changes, just better documentation
@@ -113,7 +119,7 @@
 
     * added option to overwrite file when using the uploadFile method
 
-    * when a file is successfully uploaded, the new metadata is now 
+    * when a file is successfully uploaded, the new metadata is now
 		  returned on the success callback
 
 - 2011-10-26 Ruben Fonseca <fonseka@gmail.com>
