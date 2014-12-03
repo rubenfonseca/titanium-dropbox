@@ -1,3 +1,11 @@
+- 2014-12-02 Ruben Fonseca <fonseka@gmail.com>
+
+    * version 2.9 released
+
+    * fixed documentation bug on searchPath
+
+    * added file_limit parameter to loadMetadata call
+
 - 2014-01-29 Ruben Fonseca <fonseka@gmail.com>
 
     * version 2.8 released
