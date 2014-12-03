@@ -32,7 +32,7 @@ Gets the metadata for a file. It accepts a dictionary with the following options
 - hash[string]: OPTIONAL. if you are making sucessive requests on the same
   path, you should use the event.hash returned on the success callback. this in
   turn will make the server fire the 'unchanged' callback if the metadata did
-  not change 
+  not change
 - success[callback]: the event object has the following
   properties
 > hash[string]<br />
@@ -111,7 +111,7 @@ Uploads a new file to Dropbox. It accepts a dictionary with the following option
   using the .getMetadata method, under the key `rev`
 - overwrite[boolean]: [optional] if `true`, the upload doesn't create a new file
   if the target path already exists. The default value is `false`, so if the
-  target file already exists, a new file is created, and never overwritten. 
+  target file already exists, a new file is created, and never overwritten.
 - success[callback]: called if the upload succeeds<br />
 - error[callback]: called if the upload fails<br />
 - progress[callback]: called during the upload. It has a 'progress' event
@@ -181,7 +181,7 @@ copy that file to another user's Dropbox. It accepts a dictionary:
 > - copyRef[string]: the copyRef reference you can then use on copyPath.
 - error[callback]: called if the ref can't be obtained
 
-### dropbox.client.searchPath({...})
+### dropbox.client.search({...})
 
 Searches a directory for entries matching the query. It accepts a dictionary:
 
@@ -228,7 +228,7 @@ call to revert the file to its previous state. It accepts a dictionary:
 
 - path[string]: the Dropbox path to get revisions
 - success[callback]: called with the revisions under the `revisions` key.
-- error[callback]: called if the loadRevisions fails 
+- error[callback]: called if the loadRevisions fails
 
 ### dropbox.client.restoreRevision({...})
 
