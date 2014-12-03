@@ -123,13 +123,23 @@
   RELEASE_AND_REPLACE(loadMetadataSuccessCallback, success);
   RELEASE_AND_REPLACE(loadMetadataUnchangedCallback, unchanged);
   RELEASE_AND_REPLACE(loadMetadataErrorCallback, error);
-    
+  
   id path = [args objectForKey:@"path"];
   id hash = [args objectForKey:@"hash"];
+  id file_limit = [args objectForKey:@"file_limit"];
   ENSURE_TYPE(path, NSString);
   ENSURE_TYPE_OR_NIL(hash, NSString);
+  ENSURE_TYPE_OR_NIL(file_limit, NSNumber);
   
-  [self.restClient loadMetadata:path withHash:hash];
+  NSDictionary *params = [NSDictionary dictionary];
+  if(hash) {
+    [params setValue:hash forKey:@"hash"];
+  }
+  if (file_limit) {
+    [params setValue:file_limit forKey:@"file_limit"];
+  }
+  
+  [self.restClient loadMetadata:path withParams:params];
 }
 
 - (void)restClient:(DBRestClient*)client loadedMetadata:(DBMetadata*)metadata {
