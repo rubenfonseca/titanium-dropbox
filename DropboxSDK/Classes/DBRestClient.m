@@ -787,7 +787,7 @@ params:(NSDictionary *)params
     
     request.userInfo = [NSDictionary dictionaryWithObjectsAndKeys:
                             path, @"path",
-                            [NSNumber numberWithInt:limit], @"limit", nil];
+                            [NSNumber numberWithInteger:limit], @"limit", nil];
 
     [requests addObject:request];
 }

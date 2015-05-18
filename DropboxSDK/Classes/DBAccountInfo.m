@@ -13,6 +13,7 @@
 
 - (id)initWithDictionary:(NSDictionary*)dict {
     if ((self = [super init])) {
+        email = [[dict objectForKey:@"email"] retain];
         country = [[dict objectForKey:@"country"] retain];
         displayName = [[dict objectForKey:@"display_name"] retain];
         if ([dict objectForKey:@"quota_info"]) {
@@ -26,6 +27,7 @@
 }
 
 - (void)dealloc {
+    [email release];
     [country release];
     [displayName release];
     [quota release];
@@ -35,6 +37,7 @@
     [super dealloc];
 }
 
+@synthesize email;
 @synthesize country;
 @synthesize displayName;
 @synthesize quota;
