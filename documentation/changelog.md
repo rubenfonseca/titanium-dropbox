@@ -1,3 +1,14 @@
+- 2015-05-18 Sebastian Klaus <sebastian.klaus@gmail.com>
+	* version 3.0 released
+	
+	* Updating to the latest Dropbox SDK
+	
+	* Updating to 64bit
+	
+	* Precompiled module zip
+	
+	* Moving module zips to dist folder
+
 - 2014-12-02 Ruben Fonseca <fonseka@gmail.com>
 
     * version 2.9 released

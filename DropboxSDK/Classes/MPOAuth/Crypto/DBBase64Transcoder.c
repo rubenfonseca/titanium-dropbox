@@ -94,8 +94,8 @@ static const int8_t kBase64DecodeTable[128] = {
 
 static const u_int8_t kBits_00000011 = 0x03;
 static const u_int8_t kBits_00001111 = 0x0F;
-static const u_int8_t kBits_00110000 = 0x30;
-static const u_int8_t kBits_00111100 = 0x3C;
+// unused: static const u_int8_t kBits_00110000 = 0x30;
+// unused: static const u_int8_t kBits_00111100 = 0x3C;
 static const u_int8_t kBits_00111111 = 0x3F;
 static const u_int8_t kBits_11000000 = 0xC0;
 static const u_int8_t kBits_11110000 = 0xF0;

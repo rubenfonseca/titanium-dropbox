@@ -32,6 +32,7 @@ extern id<DBNetworkRequestDelegate> dbNetworkRequestDelegate;
 @property (nonatomic, retain) UIAlertView *alertView;
 @property (nonatomic, assign) BOOL hasLoaded;
 @property (nonatomic, retain) NSURL *url;
+@property (nonatomic, retain) NSURLRequest *request;
 @property (nonatomic, retain) UIWebView *webView;
 
 @end
@@ -66,8 +67,17 @@ extern id<DBNetworkRequestDelegate> dbNetworkRequestDelegate;
 }
 
 - (id)initWithUrl:(NSURL *)connectUrl fromController:(UIViewController *)pRootController session:(DBSession *)pSession {
+    return [self initWithUrlRequest:[DBConnectController requestForUrl:connectUrl]
+                     fromController:rootController
+                            session:pSession];
+}
+
+- (id)initWithUrlRequest:(NSURLRequest *)connectReq
+          fromController:(UIViewController *)pRootController
+                 session:(DBSession *)pSession {
     if ((self = [super init])) {
-        self.url = connectUrl;
+        self.url = [connectReq URL];
+        self.request = connectReq;
         self.rootController = pRootController;
         self.session = pSession;
 
@@ -233,7 +243,10 @@ extern id<DBNetworkRequestDelegate> dbNetworkRequestDelegate;
 #endif
         return NO;
     } else if (![[[request URL] dbPathComponents] isEqual:[self.url dbPathComponents]]) {
-        DBConnectController *childController = [[[DBConnectController alloc] initWithUrl:[request URL] fromController:self.rootController] autorelease];
+        DBConnectController *childController =
+            [[[DBConnectController alloc] initWithUrlRequest:request
+                                              fromController:self.rootController
+                                                     session:self.session] autorelease];
 
         NSDictionary *queryParams = [DBSession parseURLParams:[[request URL] query]];
         NSString *title = [queryParams objectForKey:@"embed_title"];
@@ -270,10 +283,14 @@ extern id<DBNetworkRequestDelegate> dbNetworkRequestDelegate;
 
 #pragma mark private methods
 
++ (NSURLRequest *)requestForUrl:(NSURL *)reqUrl {
+    return [[[NSURLRequest alloc] initWithURL:reqUrl
+                                  cachePolicy:NSURLCacheStorageNotAllowed
+                              timeoutInterval:20] autorelease];
+}
+
 - (void)loadRequest {
-    NSURLRequest *urlRequest =
-		[[[NSURLRequest alloc] initWithURL:self.url cachePolicy:NSURLCacheStorageNotAllowed timeoutInterval:20] autorelease];
-    [self.webView loadRequest:urlRequest];
+    [self.webView loadRequest:self.request];
 }
 
 - (BOOL)openUrl:(NSURL *)openUrl {

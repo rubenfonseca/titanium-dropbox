@@ -14,8 +14,8 @@
 static NSString *kDBLinkedUserDefaultsKey = @"DropboxLinked";
 
 static char *kDBServiceName;
-static char *kDBAccountName = "Dropbox";
-static SecKeychainItemRef itemRef;
+static const char *kDBAccountName = "Dropbox";
+static SecKeychainItemRef s_itemRef;
 
 @implementation DBKeychain
 
@@ -30,6 +30,27 @@ static SecKeychainItemRef itemRef;
 	[keychainId getCString:kDBServiceName maxLength:len encoding:NSUTF8StringEncoding];
 }
 
++ (SecKeychainItemRef)itemRef {
+	@synchronized ([DBKeychain class]) {
+		return s_itemRef;
+	}
+}
+
++ (void)setItemRef:(SecKeychainItemRef)itemRef {
+	@synchronized ([DBKeychain class]) {
+		if (itemRef == s_itemRef)
+			return;
+
+		if (itemRef) {
+			CFRetain(itemRef);
+        }
+		if (s_itemRef) {
+			CFRelease(s_itemRef);
+		}
+		s_itemRef = itemRef;
+	}
+}
+
 + (NSDictionary *)credentials {
 	if (![[[NSUserDefaults standardUserDefaults] objectForKey:kDBLinkedUserDefaultsKey] boolValue]) {
 		return nil;
@@ -37,6 +58,7 @@ static SecKeychainItemRef itemRef;
 
 	UInt32 dataLen = 0;
 	void *pData = NULL;
+	SecKeychainItemRef itemRef = nil;
 	OSStatus status = SecKeychainFindGenericPassword(NULL,
 													 (int32_t)strlen(kDBServiceName), kDBServiceName,
 													 (int32_t)strlen(kDBAccountName), kDBAccountName,
@@ -46,11 +68,18 @@ static SecKeychainItemRef itemRef;
 	if (status == noErr) {
 		NSData *data = [NSData dataWithBytes:pData length:dataLen];
 		ret = [NSKeyedUnarchiver unarchiveObjectWithData:data];
+		[DBKeychain setItemRef:itemRef];
 	} else if (status != errSecItemNotFound) {
 		DBLogWarning(@"DropboxSDK: error reading stored credentials (%d)", status);
 	}
 
-	status = SecKeychainItemFreeContent(NULL, pData);
+	if (itemRef) {
+		CFRelease(itemRef);
+	}
+	if (pData) {
+		SecKeychainItemFreeContent(NULL, pData);
+	}
+
 	return ret;
 }
 
@@ -62,10 +91,17 @@ static SecKeychainItemRef itemRef;
 	[self credentials]; // Make sure itemRef is set if credentials hasn't been called yet
 
 	OSStatus status = noErr;
+	SecKeychainItemRef itemRef = [DBKeychain itemRef];
 	if (!itemRef) {
 		status = SecKeychainAddGenericPassword(NULL, (int32_t)strlen(kDBServiceName), kDBServiceName,
 											   (int32_t)strlen(kDBAccountName), kDBAccountName,
 											   (int32_t)[data length], [data bytes], &itemRef);
+		if (status == noErr) {
+			[DBKeychain setItemRef:itemRef];
+		}
+		if (itemRef) {
+			CFRelease(itemRef);
+		}
 	} else {
 		status = SecKeychainItemModifyAttributesAndData(itemRef, NULL, (int32_t)[data length], [data bytes]);
 	}
@@ -76,8 +112,13 @@ static SecKeychainItemRef itemRef;
 }
 
 + (void)deleteCredentials {
+	[self credentials]; // Make sure itemRef is set if credentials hasn't been called yet
+	SecKeychainItemRef itemRef = [DBKeychain itemRef];
+	if (!itemRef)
+		return;
+
 	OSStatus status = SecKeychainItemDelete(itemRef);
-	itemRef = NULL;
+	[DBKeychain setItemRef:nil];
 
 	if (status == noErr) {
 		[[NSUserDefaults standardUserDefaults] removeObjectForKey:kDBLinkedUserDefaultsKey];
